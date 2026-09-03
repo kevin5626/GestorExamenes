@@ -60,22 +60,21 @@
                                         Seleccionar subtema
                                     </option>
 
-                                    <option value="numeros">
-                                        Números
-                                    </option>
-
-                                    <option value="algebra">
-                                        Álgebra
-                                    </option>
-
-                                    <option value="geometria">
-                                        Geometría
+                                    <option value="Algoritmos">
+                                        Algoritmos
                                     </option>
 
                                     <option value="Logica">
                                         Logica
                                     </option>
 
+                                    <option value="Clases">
+                                        Clases
+                                    </option>
+
+                                    <option value="JavaScript">
+                                        JavaScript
+                                    </option>
                                 </select>
                             </div>
 
@@ -141,11 +140,11 @@
                         </div>
                     </div>
                 </div>
-                        <?php
+<?php
         $tema_elegido = "Programación";
-        $subtema_elegido = $_POST['subtema'];
-        $cantidad = $_POST['cantidad'];
-        $dificultad = $_POST['dificultad'];
+        @$subtema_elegido = $_POST['subtema'];
+        @$cantidad = $_POST['cantidad'];
+        @$dificultad = $_POST['dificultad'];
 
         // 1. Configuración de la conexión a la base de datos
         $usuario = 'root';
@@ -182,29 +181,8 @@
             ]);
             
             // 5. Obtener los resultados
-            $preguntas = $stmt->fetchAll();
             
-            // 6. Mostrar los resultados al usuario
-            echo "<h2>Preguntas encontradas para: $tema_elegido - $subtema_elegido</h2>";
-            if (empty($preguntas)) {
-                echo "<p>No se encontraron preguntas que coincidan con la selección.</p>";
-            } else {
-                echo "<ul>";
-                foreach ($preguntas as $preg) {
-                    echo "<li>";
-                    echo "<strong>Pregunta:</strong> " . $preg['textoPregunta'] . "<br>";
-                    $datos = json_decode($preg['respuestas']);
-                    $listaRespuestas = $datos -> respuesta;
-                    echo "Opción 1: ". "<br><input class='form-check-input' type='radio'>". implode("<br><input class='form-check-input' type='radio'>", $listaRespuestas) . "<br>";
-                    echo "<small>Apariciones: " . $preg['apariciones'] . "</small>";
-                    echo "</li><br>";
-                }
-                echo "</ul>";
-            }
-        } else {
-            echo "Por favor, selecciona un tema y un subtema válidos.";
-        }
-        ?>
+?>
             </div>
 
             <div class="col-md-7">
@@ -219,80 +197,31 @@
                     </p>
 
                     <div id="preguntas">
-                        <div class='pregunta border rounded p-3 mb-3'><div class='d-flex justify-content-between'><h5>Pregunta 1</h5><p></p></div></div>
-                        <div class="pregunta border rounded p-3 mb-3">
-                            <div class="d-flex justify-content-between">
-                                <h5>
-                                    Pregunta 1
-                                </h5>
+                        <?php
+                        $preguntas = $stmt->fetchAll();
+                        
+                        // 6. Mostrar los resultados al usuario
+                        if (empty($preguntas)) {
+                            echo "<p>No se encontraron preguntas que coincidan con la selección.</p>";
+                        } else {
+                            $contador = 0;
+                            foreach ($preguntas as $pregunta) {
+                                $contador = $contador + 1;
+                                $datos = json_decode($pregunta['respuestas']);
+                                $listaRespuestas = $datos -> respuesta;
+                                echo "<div class='pregunta border rounded p-3 mb-3'>". "<div class='d-flex justify-content-between'>". "<h5>Pregunta $contador</h5>". "<button type='button' class='btn btn-danger btn-sm eliminarPregunta'> X </button>". "</div>". "<p>". $pregunta['textoPregunta']. "</p>".  "<div class='form-check'>". "<input class='form-check-input' type='radio'>". implode("<br><input class='form-check-input' type='radio'>", $listaRespuestas) . "</div>". "</div>". "<br>";
 
-                                <button type="button" class="btn btn-danger btn-sm eliminarPregunta">
-                                    X
-                                </button>
-
-                            </div>
-
-                            <p>
-                                ¿Cuál es el resultado de 5 + 7?
-                            </p>
-                        </div>
-
-                        <div class="pregunta border rounded p-3 mb-3">
-                            <div class="d-flex justify-content-between">
-                                <h5>
-                                    Pregunta 2
-                                </h5>
-
-
-                                <button
-                                    type="button"
-                                    class="btn btn-danger btn-sm eliminarPregunta"
-                                >
-                                    X
-                                </button>
-
-                            </div>
-
-
-                            <p>
-                                Resolver la siguiente ecuación:
-                                2x + 4 = 10.
-                            </p>
-
-
-                        </div>
-
-
-                        <div class="pregunta border rounded p-3 mb-3">
-
-
-                            <div
-                                class="d-flex justify-content-between"
-                            >
-
-                                <h5>
-                                    Pregunta 3
-                                </h5>
-
-
-                                <button
-                                    type="button"
-                                    class="btn btn-danger btn-sm eliminarPregunta"
-                                >
-                                    X
-                                </button>
-
-                            </div>
-
-
-                            <p>
-                                ¿Cuál es el área de un cuadrado
-                                de 5 cm de lado?
-                            </p>
-                        </div>
-                    </div>
-
-
+                                @$seleccion = $_POST['seleccion'];
+                                echo $seleccion;
+                            }
+                            echo "<p>Código de acceso: 1</p>";
+                            echo "<a href='profesor.html'>". "<button type='button' class='btn btn-success'> Enviar examen </button>". "</a>";
+                            echo "</div>";
+                        }
+                        } else {
+                            echo "Por favor, selecciona un tema y un subtema válidos.";
+                        }
+                        ?>
 
                     <div class="d-flex justify-content-between">
                         <p>Código de acceso: 1</p>
@@ -325,121 +254,106 @@
                         "mb-3"
                     );
 
-
                     nuevoSubtema.innerHTML = `
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <h4 class="m-0">
+                                    Subtema ${numeroSubtema}
+                                </h4>
 
-                        <div
-                            class="d-flex justify-content-between align-items-center mb-3"
-                        >
+                                <button type="button" class="btn btn-danger btn-sm eliminarSubtema">
+                                    X
+                                </button>
 
-                            <h4 class="m-0">
-                                Subtema ${numeroSubtema}
-                            </h4>
+                            </div>
 
-                            <button
-                                type="button"
-                                class="btn btn-danger btn-sm eliminarSubtema"
-                            >
-                                X
-                            </button>
+                        <form method="post">
+                            <div class="mb-3">
+                                <label class="form-label">
+                                    Subtema:
+                                </label>
 
-                        </div>
+                                <select class="form-select" name="subtema">
+                                    <option value="">
+                                        Seleccionar subtema
+                                    </option>
 
+                                    <option value="Algoritmos">
+                                        Algoritmos
+                                    </option>
 
-                        <div class="mb-3">
+                                    <option value="Logica">
+                                        Logica
+                                    </option>
 
-                            <label class="form-label">
-                                Subtema:
-                            </label>
+                                    <option value="Clases">
+                                        Clases
+                                    </option>
 
-                            <select class="form-select">
+                                    <option value="JavaScript">
+                                        JavaScript
+                                    </option>
+                                </select>
+                            </div>
 
-                                <option value="">
-                                    Seleccionar subtema
-                                </option>
-
-                                <option value="numeros">
-                                    Números
-                                </option>
-
-                                <option value="algebra">
-                                    Álgebra
-                                </option>
-
-                                <option value="geometria">
-                                    Geometría
-                                </option>
-
-                                <option value="funciones">
-                                    Funciones
-                                </option>
-
-                            </select>
-
-                        </div>
+                            <div class="mb-3">
+                                <label class="form-label">
+                                    Cantidad de preguntas:
+                                </label>
 
 
-                        <div class="mb-3">
+                                <select class="form-select" name="cantidad">
+                                    <option value="1">
+                                        1
+                                    </option>
 
-                            <label class="form-label">
-                                Cantidad de preguntas:
-                            </label>
+                                    <option value="2">
+                                        2
+                                    </option>
 
-                            <select class="form-select">
+                                    <option value="3">
+                                        3
+                                    </option>
 
-                                <option value="1">
-                                    1
-                                </option>
+                                    <option value="4">
+                                        4
+                                    </option>
 
-                                <option value="2">
-                                    2
-                                </option>
+                                    <option value="5">
+                                        5
+                                    </option>
 
-                                <option value="3">
-                                    3
-                                </option>
+                                    <option value="10">
+                                        10
+                                    </option>
+                                </select>
 
-                                <option value="4">
-                                    4
-                                </option>
+                            </div>
 
-                                <option value="5">
-                                    5
-                                </option>
-
-                                <option value="10">
-                                    10
-                                </option>
-
-                            </select>
-
-                        </div>
+                            <div>
+                                <label class="form-label">
+                                    Dificultad:
+                                </label>
 
 
-                        <div>
+                                <select class="form-select" name="dificultad">
+                                    <option value="Facil">
+                                        Fácil
+                                    </option>
 
-                            <label class="form-label">
-                                Dificultad:
-                            </label>
+                                    <option value="Intermedio">
+                                        Intermedio
+                                    </option>
 
-                            <select class="form-select">
+                                    <option value="Dificil">
+                                        Difícil
+                                    </option>
 
-                                <option value="facil">
-                                    Fácil
-                                </option>
-
-                                <option value="intermedio">
-                                    Intermedio
-                                </option>
-
-                                <option value="dificil">
-                                    Difícil
-                                </option>
-
-                            </select>
-
-                        </div>
-
+                                </select>
+                            </div>
+                            <div class="d-flex justify-content-center mt-3">
+                                <input type="submit" class="btn btn-primary mb-4 center" value="Confirmar">
+                            </div>
+                        </form>
                     `;
 
 
