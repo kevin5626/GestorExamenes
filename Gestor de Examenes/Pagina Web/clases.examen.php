@@ -1,5 +1,15 @@
 <?php
 
+session_start();
+if (!isset($_SESSION["idUsuario"])) {
+    header("Location: principal.php");
+    exit;
+}
+if ($_SESSION["rol"] !== "profesor") {
+    header("Location: alumno.php");
+    exit;
+}
+
 class Usuario
 {
     private string $nombre;
