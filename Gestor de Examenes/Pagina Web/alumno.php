@@ -3,7 +3,7 @@
 session_start();
 
 if (!isset($_SESSION["idUsuario"])) {
-    header("Location: iniciarSesion.php");
+    header("Location: index.php");
     exit;
 }
 

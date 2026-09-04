@@ -29,6 +29,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $contrasenaHash
     );
 
+    // 1. Intentamos registrar al usuario principal
     if ($stmt->execute()) {
 
         // Obtenemos el ID del usuario recién creado
@@ -36,55 +37,49 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
         // Asignamos el usuario a su tipo
         if ($tipoUsuario === "profesor") {
-
-            $sqlRol = "INSERT INTO profesores (idUsuario)
-                       VALUES (?)";
-
+            $sqlRol = "INSERT INTO profesores (idUsuario) VALUES (?)";
         } else {
-
-            $sqlRol = "INSERT INTO alumnos (idUsuario)
-                       VALUES (?)";
+            $sqlRol = "INSERT INTO alumnos (idUsuario) VALUES (?)";
         }
 
         $stmtRol = $conexion->prepare($sqlRol);
-
         $stmtRol->bind_param("i", $idUsuario);
 
+        // 2. Intentamos registrar el rol (profesor/alumno)
         if ($stmtRol->execute()) {
-      echo "<div id='mensaje' class='row justify-content-center w-100'>";
-      echo "<div class='col-7 col-sm-6 col-lg-3 alert alert-success mx-5 text-center mt-3' role='alert'>";
-      echo "¡Usuario registrado!";
-      echo "<br>";
-      echo "<a href='iniciarSesion.php' class='btn btn-outline-dark mt-2'>Iniciar Sesion</a>";
-      echo "</div>";
-      echo "</div>";
-      echo "<script>
-         setTimeout(function() {
-         const mensaje = document.getElementById('mensajeRegistro');
-         mensaje.style.transition = 'opacity 1s';
-         mensaje.style.opacity = '0';
-         setTimeout(function() {
-         mensaje.style.display = 'none';
-         }, 1000);
-
-         }, 3000);
-            </script>";
-}
+            echo "<div id='mensaje' class='row justify-content-center w-100'>";
+            echo "<div class='col-7 col-sm-6 col-lg-3 alert alert-success mx-5 text-center mt-3' role='alert'>";
+            echo "¡Usuario registrado!";
+            echo "<br>";
+            echo "<a href='index.php' class='btn btn-outline-dark mt-2'>Iniciar Sesion</a>";
+            echo "</div>";
+            echo "</div>";
+            echo "<script>
+                setTimeout(function() {
+                const mensaje = document.getElementById('mensajeRegistro');
+                if(mensaje) {
+                    mensaje.style.transition = 'opacity 1s';
+                    mensaje.style.opacity = '0';
+                    setTimeout(function() { mensaje.style.display = 'none'; }, 1000);
+                }
+                }, 3000);
+                </script>";
         } else {
-
             echo "Error al asignar el tipo de usuario: " . $stmtRol->error;
         }
 
+        // Cerramos el stmt del rol solo si se creó correctamente
         $stmtRol->close();
 
     } else {
-
+        // Este else ahora pertenece correctamente al fallo de $stmt->execute()
         echo "Error al crear el usuario: " . $stmt->error;
     }
 
+    // Cerramos los recursos principales al finalizar el procesamiento del POST
     $stmt->close();
     $conexion->close();
-
+}
 ?>
 
 <!DOCTYPE html>

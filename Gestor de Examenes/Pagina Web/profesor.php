@@ -29,7 +29,7 @@ if ($_SESSION["rol"] !== "profesor") {
         <div class="row g-3">
             <div class="col-md-4">
                 <a href="crearExamen.php" class="text-decoration-none">
-                    <button type="button" class="btn btn-outline-dark w-100">Matemática</button>
+                    <button type="button" class="btn btn-outline-dark w-100">Programación</button>
                 </a>
             </div>
             <div class="col-md-4">
