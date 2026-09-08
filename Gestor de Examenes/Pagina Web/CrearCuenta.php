@@ -56,7 +56,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             echo "</div>";
             echo "<script>
                 setTimeout(function() {
-                const mensaje = document.getElementById('mensajeRegistro');
+                const mensaje = document.getElementById('mensaje');
                 if(mensaje) {
                     mensaje.style.transition = 'opacity 1s';
                     mensaje.style.opacity = '0';
@@ -133,6 +133,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                         <button type="submit" class="btn btn-primary">Crear cuenta</button>
                     </div>
                 </form>
+                <div class="text-center my-3">
+                        <span>¿Ya tienes una cuenta?</span>
+                    </div>
+                    <div class="d-grid">
+                        <button type="button" class="btn btn-outline-dark" onclick="window.location.href='index.php'">Inicias Sesión</button>
+                    </div>
             </div>
         </div>
     </div>
