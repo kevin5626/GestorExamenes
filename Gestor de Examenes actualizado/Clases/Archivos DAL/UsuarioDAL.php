@@ -1,7 +1,7 @@
 <?php
-    require_once("usuario.php");
+    require_once("Usuario.php");
 
-    class TutorDAL {
+    class UsuarioDAL {
         private $usuario = 'root';
         private $contrasena = '1234';
         private $servidor = "localhost";
@@ -17,8 +17,8 @@
 
             mysqli_query($conexion, $consulta);
 
-            $idTutor = mysqli_insert_id($conexion);
-            $usuario -> setIdTutor($idTutor);
+            $idUsuario = mysqli_insert_id($conexion);
+            $usuario -> setIdUsuario($idUsuario);
             
             mysqli_close($conexion);
         }
@@ -33,7 +33,7 @@
             $registros = array();
 
             while($registro = mysqli_fetch_array($resultado)) {
-                $usuario = new Tutor ($registro["idUsuario"], $registro["nombre"], $registro["apellido"], $registro["email"], $registro["contrasena"]);
+                $usuario = new Usuario ($registro["idUsuario"], $registro["nombre"], $registro["apellido"], $registro["email"], $registro["contrasena"]);
 
                 $registros[] = $usuario;
             } 

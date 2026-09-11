@@ -1,41 +1,41 @@
 <?php
-    require_once("tutor.php");
+    require_once("Resultado.php");
 
-    class TutorDAL {
+    class ResultadoDAL {
         private $usuario = 'root';
         private $contrasena = '1234';
         private $servidor = "localhost";
-        private $basededatos = 'gestor_alumnos';
+        private $basededatos = 'gestor_examenes';
     
-        public function insertTutor($tutor) {
+        public function insertResultado($resultado) {
             $conexion = mysqli_connect($this -> servidor, $this -> usuario, $this -> contrasena) or die ("Error al conectar: ");
             mysqli_set_charset($conexion, 'utf8');
             $baseDatos = mysqli_select_db($conexion, $this -> basededatos) or die ("Error seleccionar la BD: ");
 
-            $consulta = (sprintf("INSERT INTO tutores (nombre, apellido) VALUES('%s', '%s');",
-            $tutor -> getNombre(), $tutor -> getApellido()));
+            $consulta = (sprintf("INSERT INTO resultados (fechaResultado, calificacion, cantidadErrores, cantidadAciertos, idExamen) VALUES('%s', '%s', '%s', '%s', '%s');",
+            $resultado -> getFechaResultado(), $resultado -> getCAaificacion(), $resultado -> getCantidadErrores(), $resultado -> getCantidadAciertos(), $resultado -> getIdExamen()));
 
             mysqli_query($conexion, $consulta);
 
-            $idTutor = mysqli_insert_id($conexion);
-            $tutor -> setIdTutor($idTutor);
+            $idResultado = mysqli_insert_id($conexion);
+            $resultado -> setIdResultado($idResultado);
             
             mysqli_close($conexion);
         }
 
-        public function getTutores(): array {
+        public function getResultados(): array {
             $conexion = mysqli_connect($this -> servidor, $this -> usuario, $this -> contrasena) or die ("Error al conectar: ");
             mysqli_set_charset($conexion, 'utf8');
             $baseDatos = mysqli_select_db($conexion, $this -> basededatos) or die ("Error seleccionar la BD: ");
 
-            $consulta = (sprintf("SELECT * FROM tutores"));
+            $consulta = (sprintf("SELECT * FROM resultados"));
             $resultado = mysqli_query($conexion, $consulta);
             $registros = array();
 
             while($registro = mysqli_fetch_array($resultado)) {
-                $tutor = new Tutor ($registro["Id_Tutor"], $registro["nombre"], $registro["apellido"]);
+                $resultado = new Resultado ($registro["idResultado"], $registro["fechaResultado"], $registro["calificacion"], $registro["cantidadErrores"], $registro["cantidadAciertos"], $registro["idExamen"]);
 
-                $registros[] = $tutor;
+                $registros[] = $resultado;
             } 
             
             mysqli_close($conexion);

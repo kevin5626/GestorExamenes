@@ -1,5 +1,5 @@
 <?php
-    require_once("alumno.php");
+    require_once("Alumno.php");
 
     class AlumnoDAL {
         private $usuario = 'root';
@@ -12,8 +12,8 @@
             mysqli_set_charset($conexion, 'utf8');
             $baseDatos = mysqli_select_db($conexion, $this -> basededatos) or die ("Error seleccionar la BD: ");
 
-            // $consulta = (sprintf("INSERT INTO alumnos (idUsuario) VALUES('%s');",
-            // $alumno -> getNombre(), $alumno -> getApellido()));
+            $consulta = (sprintf("INSERT INTO alumnos (idUsuario) VALUES('%s');",
+            $alumno -> getIdUsuario()));
 
             mysqli_query($conexion, $consulta);
 
@@ -33,7 +33,7 @@
             $registros = array();
 
             while($registro = mysqli_fetch_array($resultado)) {
-                $alumno = new Tutor ($registro["idAlumno"], $registro["idUsuario"]);
+                $alumno = new Alumno ($registro["idAlumno"], $registro["idUsuario"]);
 
                 $registros[] = $alumno;
             } 

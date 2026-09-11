@@ -4,12 +4,15 @@ class Examen {
     private string $tema;
     private DateTime $fechaExamen;
     private string $enlaceAcceso;
+    private int $idProfesor;
 
-    public function __construct($idExamen, $tema, $fechaExamen, $enlaceAcceso) {
+
+    public function __construct($idExamen, $tema, $fechaExamen, $enlaceAcceso, $idProfesor) {
         $this->idExamen = $idExamen;
         $this->tema = $tema;
         $this->fechaExamen = $fechaExamen;
         $this->enlaceAcceso = $enlaceAcceso;
+        $this->idProfesor = $idProfesor;
     }
 
     public function getIdExamen(): int {
@@ -28,6 +31,10 @@ class Examen {
         return $this -> enlaceAcceso;
     }
 
+    public function getIdProfesor(): int {
+        return $this -> idProfesor;
+    }
+
     public function setIdExamen(int $idExamen): void {
         $this -> idExamen = $idExamen;
     }
@@ -42,6 +49,10 @@ class Examen {
 
     public function setIdEnlaceAcceso(string $enlaceAcceso): void {
         $this -> enlaceAcceso = $enlaceAcceso;
+    }
+
+    public function setIdProfesor(int $idProfesor): void {
+        $this -> idProfesor = $idProfesor;
     }
 
     public function generarExamen(){
