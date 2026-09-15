@@ -1,18 +1,3 @@
-<?php
-
-session_start();
-
-if (!isset($_SESSION["idUsuario"])) {
-    header("Location: index.php");
-    exit;
-}
-
-if ($_SESSION["rol"] !== "alumno") {
-    header("Location: profesor.php");
-    exit;
-}
-
-?>
 
 <!DOCTYPE html>
 <html lang="es">
