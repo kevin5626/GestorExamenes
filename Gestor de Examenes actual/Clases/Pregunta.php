@@ -6,92 +6,92 @@ class Pregunta {
     private string $subtema;
     private string $dificultad;
     private string $textoPregunta;
-    private array $respuestas;
+    private array|string $respuestas;
     private string $respuestaCorrecta;
     private int $apariciones;
 
     public function __construct($idPregunta, $materia, $tema, $subtema, $dificultad, $textoPregunta, $respuestas, $respuestaCorrecta, $apariciones) {
-        $this->idPregunta = $idPregunta;
-        $this->materia = $materia;
-        $this->tema = $tema;
-        $this->subtema = $subtema;
-        $this->dificultad = $dificultad;
-        $this->textoPregunta = $textoPregunta;
+        $this->idPregunta = (int) $idPregunta;
+        $this->materia = (string) $materia;
+        $this->tema = (string) $tema;
+        $this->subtema = (string) $subtema;
+        $this->dificultad = (string) $dificultad;
+        $this->textoPregunta = (string) $textoPregunta;
         $this->respuestas = $respuestas;
-        $this->respuestaCorrecta = $respuestaCorrecta;
-        $this->apariciones = $apariciones;
+        $this->respuestaCorrecta = (string) $respuestaCorrecta;
+        $this->apariciones = (int) $apariciones;
     }
 
     public function getIdPregunta(): int {
-        return $this -> idPregunta;
+        return $this->idPregunta;
     }
 
     public function getMateria(): string {
-        return $this -> materia;
+        return $this->materia;
     }
 
     public function getTema(): string {
-        return $this -> tema;
+        return $this->tema;
     }
 
     public function getSubtema(): string {
-        return $this -> subtema;
+        return $this->subtema;
     }
 
     public function getDificultad(): string {
-        return $this -> dificultad;
+        return $this->dificultad;
     }
 
     public function getTextoPregunta(): string {
-        return $this -> textoPregunta;
+        return $this->textoPregunta;
     }
 
-    public function getRespuestas(): array {
-        return $this -> respuestas;
+    public function getRespuestas(): array|string {
+        return $this->respuestas;
     }
 
     public function getRespuestaCorrecta(): string {
-        return $this -> respuestaCorrecta;
+        return $this->respuestaCorrecta;
     }
 
     public function getApariciones(): int {
-        return $this -> apariciones;
+        return $this->apariciones;
     }
 
     public function setIdPregunta(int $idPregunta): void {
-        $this -> idPregunta = $idPregunta;
+        $this->idPregunta = $idPregunta;
     }
 
     public function setMateria(string $materia): void {
-        $this -> materia = $materia;
+        $this->materia = $materia;
     }
 
     public function setTema(string $tema): void {
-        $this -> tema = $tema;
+        $this->tema = $tema;
     }
 
     public function setSubTema(string $subtema): void {
-        $this -> subtema = $subtema;
+        $this->subtema = $subtema;
     }
 
     public function setDificultad(string $dificultad): void {
-        $this -> dificultad = $dificultad;
+        $this->dificultad = $dificultad;
     }
 
     public function setTextoPregunta(string $textoPregunta): void {
-        $this -> textoPregunta = $textoPregunta;
+        $this->textoPregunta = $textoPregunta;
     }
 
-    public function setRespuestas(array $respuestas): void {
-        $this -> respuestas = $respuestas;
+    public function setRespuestas(array|string $respuestas): void {
+        $this->respuestas = $respuestas;
     }
 
     public function setRespuestaCorrecta(string $respuestaCorrecta): void {
-        $this -> respuestaCorrecta = $respuestaCorrecta;
+        $this->respuestaCorrecta = $respuestaCorrecta;
     }
 
     public function setApariciones(int $apariciones): void {
-        $this -> apariciones = $apariciones;
+        $this->apariciones = $apariciones;
     }
 }
 ?>
