@@ -1,0 +1,153 @@
+<?php
+
+session_start();
+
+if (!isset($_SESSION["idUsuario"])) {
+    header("Location: principal.php");
+    exit;
+}
+
+if ($_SESSION["rol"] !== "alumno") {
+    header("Location: profesor.php");
+    exit;
+}
+
+?>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Examen</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container mt-5">
+        <div class="text-center mb-4">
+            <h1>Examen de Matemática</h1>
+            <p>Responda las siguientes preguntas.</p>
+        </div>
+
+        <form action="resultadoalumno.html" method="get">
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h2 class="card-title">Pregunta 1</h2>
+                    <hr>
+                    <p>¿Cuál es el resultado de 5 + 7?</p>
+                    <div class="form-check">
+                        <input
+                            class="form-check-input"
+                            type="radio"
+                            id="p1a"
+                            name="pregunta1"
+                            value="12"
+                            required
+                        >
+                        <label class="form-check-label" for="p1a">12</label>
+                    </div>
+                    <div class="form-check">
+                        <input
+                            class="form-check-input"
+                            type="radio"
+                            id="p1b"
+                            name="pregunta1"
+                            value="10"
+                        >
+                        <label class="form-check-label" for="p1b">10</label>
+                    </div>
+                    <div class="form-check">
+                        <input
+                            class="form-check-input"
+                            type="radio"
+                            id="p1c"
+                            name="pregunta1"
+                            value="15"
+                        >
+                        <label class="form-check-label" for="p1c">15</label>
+                    </div>
+                </div>
+            </div>
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h2 class="card-title">Pregunta 2</h2>
+                    <hr>
+                    <p>Resolver la siguiente ecuación: 2x + 4 = 10.</p>
+                    <div class="form-check">
+                        <input
+                            class="form-check-input"
+                            type="radio"
+                            id="p2a"
+                            name="pregunta2"
+                            value="2"
+                            required
+                        >
+                        <label class="form-check-label" for="p2a">x = 2</label>
+                    </div>
+                    <div class="form-check">
+                        <input
+                            class="form-check-input"
+                            type="radio"
+                            id="p2b"
+                            name="pregunta2"
+                            value="3"
+                        >
+                        <label class="form-check-label" for="p2b">x = 3</label>
+                    </div>
+                    <div class="form-check">
+                        <input
+                            class="form-check-input"
+                            type="radio"
+                            id="p2c"
+                            name="pregunta2"
+                            value="4"
+                        >
+                        <label class="form-check-label" for="p2c">x = 4</label>
+                    </div>
+                </div>
+            </div>
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h2 class="card-title">Pregunta 3</h2>
+                    <hr>
+                    <p>¿Cuál es el área de un cuadrado de 5 cm de lado?</p>
+                    <div class="form-check">
+                        <input
+                            class="form-check-input"
+                            type="radio"
+                            id="p3a"
+                            name="pregunta3"
+                            value="10"
+                            required
+                        >
+                        <label class="form-check-label" for="p3a">10 cm²</label>
+                    </div>
+                    <div class="form-check">
+                        <input
+                            class="form-check-input"
+                            type="radio"
+                            id="p3b"
+                            name="pregunta3"
+                            value="20"
+                        >
+                        <label class="form-check-label" for="p3b">20 cm²</label>
+                    </div>
+                    <div class="form-check">
+                        <input
+                            class="form-check-input"
+                            type="radio"
+                            id="p3c"
+                            name="pregunta3"
+                            value="25"
+                        >
+                        <label class="form-check-label" for="p3c">25 cm²</label>
+                    </div>
+                </div>
+            </div>
+            <div class="text-center mb-5">
+                <button type="submit" class="btn btn-success btn-lg">
+                    Entregar examen
+                </button>
+            </div>
+        </form>
+    </div>
+</body>
+</html>
