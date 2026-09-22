@@ -2,7 +2,7 @@
 abstract class AbstractMapper {
     protected string $servidor;
     protected string $usuario;
-    protected string $contrasenia;
+    protected string $contrasena;
     protected string $basededatos;
     protected string $charset;
 
@@ -10,7 +10,7 @@ abstract class AbstractMapper {
         $config = require __DIR__ . '/../PHP/config.php';
         $this->servidor    = $config['servidor'];
         $this->usuario     = $config['usuario'];
-        $this->contrasenia = $config['contrasena'];
+        $this->contrasena = $config['contrasena'];
         $this->basededatos = $config['basededatos'];
         $this->charset     = $config['charset'] ?? 'utf8mb4';
     }
@@ -18,6 +18,12 @@ abstract class AbstractMapper {
     abstract protected function insert($objeto);
     abstract protected function get(): array;
 
+    protected function conectar() {
+        $conexion = mysqli_connect($this->servidor, $this->usuario, $this->contrasena, $this->basededatos);
+        mysqli_set_charset($conexion, $this->charset);
+        
+        return $conexion;
+    }
     public function verificarDatos($email, $contrasena) {
         if (session_status() === PHP_SESSION_NONE) {
             session_start();

@@ -1,0 +1,17 @@
+<?php
+$nombre = "Kevin";
+$apellido = "Veron";
+$email = "kevin@gmail.com";
+$contrasena = "profesora67";
+$tipoUsuario = "profesor";
+
+require_once(__DIR__ . '/Usuario.php');
+require_once(__DIR__ . "/DAL/UsuarioDAL.php");
+
+$dalUsuario = new UsuarioDAL();
+
+$contrasenaHash = password_hash($contrasena, PASSWORD_DEFAULT);
+
+$usuario = new Usuario(null, $nombre, $apellido, $email, $contrasenaHash);
+echo $dalUsuario -> insert($usuario);
+?>
