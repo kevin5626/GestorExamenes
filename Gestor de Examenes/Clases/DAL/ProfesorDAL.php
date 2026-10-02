@@ -1,45 +1,29 @@
 <?php
     require_once(__DIR__ . "/../Profesor.php");
+    require_once(__DIR__ . "/../AbstractMapper.php");
 
-    class ProfesorDAL {
-        private $usuario = 'root';
-        private $contrasena = '1234';
-        private $servidor = "localhost";
-        private $basededatos = 'gestor_examenes';
-    
-        public function insertProfesor($profesor) {
-            $conexion = mysqli_connect($this -> servidor, $this -> usuario, $this -> contrasena) or die ("Error al conectar: ");
-            mysqli_set_charset($conexion, 'utf8');
-            $baseDatos = mysqli_select_db($conexion, $this -> basededatos) or die ("Error seleccionar la BD: ");
+    class ProfesorDAL extends AbstractMapper {
+        public function insert($profesor) {
+            $pdo = $this->conectar();
+            $stmt = $pdo->prepare("INSERT INTO profesores (idUsuario) VALUES(:idUsuario);");
+            $stmt->execute([
+                ':idUsuario'     => $profesor->getIdUsuario(),
+            ]);
 
-            $consulta = (sprintf("INSERT INTO profesores (idUsuario) VALUES('%s');",
-            $profesor -> getIdUsuario()));
-
-            mysqli_query($conexion, $consulta);
-
-            $idProfesor = mysqli_insert_id($conexion);
-            $profesor -> setIdProfesor($idProfesor);
-            
-            mysqli_close($conexion);
+            $idProfesor = $pdo->lastInsertId(); 
+            $profesor->setIdProfesor($idProfesor);
         }
 
-        public function getProfesores(): array {
-            $conexion = mysqli_connect($this -> servidor, $this -> usuario, $this -> contrasena) or die ("Error al conectar: ");
-            mysqli_set_charset($conexion, 'utf8');
-            $baseDatos = mysqli_select_db($conexion, $this -> basededatos) or die ("Error seleccionar la BD: ");
-
-            $consulta = (sprintf("SELECT * FROM profesores"));
-            $resultado = mysqli_query($conexion, $consulta);
+        public function get(): array {
+            $pdo = $this->conectar();
+            $stmt = $pdo->query("SELECT * FROM profesores");
             $registros = array();
 
-            while($registro = mysqli_fetch_array($resultado)) {
+            while($registro = $stmt->fetch(PDO::FETCH_ASSOC)) {
                 $profesor = new Profesor ($registro["IdProfesor"], $registro["idUsuario"]);
 
                 $registros[] = $profesor;
-            } 
-            
-            mysqli_close($conexion);
-
+            }
             return $registros;
         }
     }

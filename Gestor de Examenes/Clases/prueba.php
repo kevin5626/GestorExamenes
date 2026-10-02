@@ -13,5 +13,10 @@ $dalUsuario = new UsuarioDAL();
 $contrasenaHash = password_hash($contrasena, PASSWORD_DEFAULT);
 
 $usuario = new Usuario(null, $nombre, $apellido, $email, $contrasenaHash);
-echo $dalUsuario -> insert($usuario);
+$dalUsuario -> insert($usuario);
+
+$usuarioArray = $dalUsuario -> get();
+foreach($usuarioArray as $u) {
+    echo "Nombre: " . $u->getNombre() . "\n";
+}
 ?>

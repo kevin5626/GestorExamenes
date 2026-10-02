@@ -1,13 +1,9 @@
 <?php
-require_once __DIR__ . "/../Pregunta.php";
+require_once(__DIR__ . "/../Pregunta.php");
+require_once(__DIR__ . "/../AbstractMapper.php");
 
-class PreguntaDAL {
-    private string $usuario = 'root';
-    private string $contrasena = '1234';
-    private string $servidor = "localhost";
-    private string $basededatos = 'gestor_examenes';
-
-    public function insertPregunta(Pregunta $pregunta): void {
+class PreguntaDAL extends AbstractMapper {
+    public function insert($pregunta): void {
         $conexion = mysqli_connect($this->servidor, $this->usuario, $this->contrasena, $this->basededatos) or die("Error al conectar: ");
         mysqli_set_charset($conexion, 'utf8');
 
@@ -29,7 +25,7 @@ class PreguntaDAL {
         mysqli_close($conexion);
     }
 
-    public function getPreguntas(): array {
+    public function get(): array {
         $conexion = mysqli_connect($this->servidor, $this->usuario, $this->contrasena, $this->basededatos) or die("Error al conectar: ");
         mysqli_set_charset($conexion, 'utf8');
 

@@ -1,46 +1,34 @@
 <?php
-    require_once("Resultado.php");
+require_once(__DIR__ . "/../Resultado.php");
+require_once(__DIR__ . "/../AbstractMapper.php");
 
-    class ResultadoDAL {
-        private $usuario = 'root';
-        private $contrasena = '1234';
-        private $servidor = "localhost";
-        private $basededatos = 'gestor_examenes';
-    
-        public function insertResultado($resultado) {
-            $conexion = mysqli_connect($this -> servidor, $this -> usuario, $this -> contrasena) or die ("Error al conectar: ");
-            mysqli_set_charset($conexion, 'utf8');
-            $baseDatos = mysqli_select_db($conexion, $this -> basededatos) or die ("Error seleccionar la BD: ");
+class ResultadoDAL extends AbstractMapper {
+    public function insert($resultado) {
+        $pdo = $this->conectar();
+        $stmt = $pdo->prepare("INSERT INTO resultados (fechaResultado, calificacion, cantidadErrores, cantidadAciertos, idExamen) VALUES(:fechaResultado, :calificacion, :cantidadErrores, :cantidadAciertos, :idExamen);");
+        $stmt->execute([
+            ':fechaResultado'     => $resultado->getFechaResultado(),
+            ':calificacion'       => $resultado->getCalificacion(),
+            ':cantidadErrores'    => $resultado->getCantidadErrores(),
+            ':cantidadAciertos'   => $resultado->getCantidadAciertos(),
+            ':idExamen'           => $resultado->getIdExamen()
+        ]);
 
-            $consulta = (sprintf("INSERT INTO resultados (fechaResultado, calificacion, cantidadErrores, cantidadAciertos, idExamen) VALUES('%s', '%s', '%s', '%s', '%s');",
-            $resultado -> getFechaResultado(), $resultado -> getCAaificacion(), $resultado -> getCantidadErrores(), $resultado -> getCantidadAciertos(), $resultado -> getIdExamen()));
-
-            mysqli_query($conexion, $consulta);
-
-            $idResultado = mysqli_insert_id($conexion);
-            $resultado -> setIdResultado($idResultado);
-            
-            mysqli_close($conexion);
-        }
-
-        public function getResultados(): array {
-            $conexion = mysqli_connect($this -> servidor, $this -> usuario, $this -> contrasena) or die ("Error al conectar: ");
-            mysqli_set_charset($conexion, 'utf8');
-            $baseDatos = mysqli_select_db($conexion, $this -> basededatos) or die ("Error seleccionar la BD: ");
-
-            $consulta = (sprintf("SELECT * FROM resultados"));
-            $resultado = mysqli_query($conexion, $consulta);
-            $registros = array();
-
-            while($registro = mysqli_fetch_array($resultado)) {
-                $resultado = new Resultado ($registro["idResultado"], $registro["fechaResultado"], $registro["calificacion"], $registro["cantidadErrores"], $registro["cantidadAciertos"], $registro["idExamen"]);
-
-                $registros[] = $resultado;
-            } 
-            
-            mysqli_close($conexion);
-
-            return $registros;
-        }
+        $idResultado = $pdo->lastInsertId(); 
+        $resultado->setIdUsuario($idResultado);
     }
+
+    public function get(): array {
+        $pdo = $this->conectar();
+        $stmt = $pdo->query("SELECT * FROM resultados");
+        $registros = array();
+
+        while($registro = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $resultado = new Resultado ($registro["idResultado"], $registro["fechaResultado"], $registro["calificacion"], $registro["cantidadErrores"], $registro["cantidadAciertos"], $registro["idExamen"]);
+
+            $registros[] = $resultados;
+        }
+        return $registros;
+    }
+}
 ?>

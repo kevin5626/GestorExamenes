@@ -1,13 +1,9 @@
 <?php
-require_once __DIR__ . "/../Examen.php";
+require_once(__DIR__ . "/../Examen.php");
+require_once(__DIR__ . "/../AbstractMapper.php");
 
-class ExamenDAL {
-    private string $usuario = 'root';
-    private string $contrasena = '1234';
-    private string $servidor = "localhost";
-    private string $basededatos = 'gestor_examenes';
-
-    public function insertExamen(Examen $examen): void {
+class ExamenDAL extends AbstractMapper {
+    public function insert($examen): void {
         $conexion = mysqli_connect($this->servidor, $this->usuario, $this->contrasena, $this->basededatos) or die("Error al conectar: ");
         mysqli_set_charset($conexion, 'utf8');
 
@@ -24,7 +20,7 @@ class ExamenDAL {
         mysqli_close($conexion);
     }
 
-    public function getExamenes(): array {
+    public function get(): array {
         $conexion = mysqli_connect($this->servidor, $this->usuario, $this->contrasena, $this->basededatos) or die("Error al conectar: ");
         mysqli_set_charset($conexion, 'utf8');
 

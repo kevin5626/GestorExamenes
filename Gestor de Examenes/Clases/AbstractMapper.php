@@ -14,73 +14,21 @@ abstract class AbstractMapper {
         $this->basededatos = $config['basededatos'];
         $this->charset     = $config['charset'] ?? 'utf8mb4';
     }
+    protected function conectar() {
+        $dsn = "mysql:host={$this->servidor};dbname={$this->basededatos};charset={$this->charset}";
+        try{
+            $conexion = new PDO($dsn, $this->usuario, $this->contrasena);
+
+            $conexion->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+            return $conexion;
+        } catch(PDOException $e) {
+            die("Error de conexión: " .$e->getMessage());
+        }
+        
+    }
 
     abstract protected function insert($objeto);
     abstract protected function get(): array;
-
-    protected function conectar() {
-        $conexion = mysqli_connect($this->servidor, $this->usuario, $this->contrasena, $this->basededatos);
-        mysqli_set_charset($conexion, $this->charset);
-        
-        return $conexion;
-    }
-    public function verificarDatos($email, $contrasena) {
-        if (session_status() === PHP_SESSION_NONE) {
-            session_start();
-        }
-
-        $conexion = new mysqli($this->servidor, $this->usuario, $this->contrasenia, $this->basededatos);
-        
-        $conexion -> set_charset($this->charset);
-
-        $error = "";
-        $sql = "SELECT 
-                    u.*,
-                    p.idProfesor,
-                    a.idAlumno
-                FROM usuarios u
-                LEFT JOIN profesores p 
-                    ON u.idUsuario = p.idUsuario
-                LEFT JOIN alumnos a 
-                    ON u.idUsuario = a.idUsuario
-                WHERE u.email = ?";
-
-        $stmt = $conexion->prepare($sql);
-        $stmt->bind_param("s", $email);
-        $stmt->execute();
-        $resultado = $stmt->get_result();
-
-        if ($resultado->num_rows === 1) {
-            $datos = $resultado->fetch_assoc();
-            if (password_verify($contrasena, $datos["contrasena"])) {
-                $_SESSION["idUsuario"] = $datos["idUsuario"];
-                $_SESSION["nombre"] = $datos["nombre"];
-                $_SESSION["email"] = $datos["email"];
-
-                if ($datos["idProfesor"] !== null) {
-                    $_SESSION["rol"] = "profesor";
-                    $_SESSION["idProfesor"] = $datos["idProfesor"];
-                    header("Location: inicioProfesor.php");
-                    exit;
-                } elseif ($datos["idAlumno"] !== null) {
-                    $_SESSION["rol"] = "alumno";
-                    $_SESSION["idAlumno"] = $datos["idAlumno"];
-                    header("Location: inicioAlumno.php");
-                    exit;
-                } else {
-                    $error = "El usuario no tiene un rol asignado.";
-                }
-            } else {
-                $error = "Email o contraseña incorrectos.";
-            }
-        } else {
-            $error = "El usuario no existe.";
-        }
-
-        return $error;
-
-        $stmt -> close();
-        $conexion -> close();
-    }
 }    
 ?>
