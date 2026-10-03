@@ -15,7 +15,7 @@ class ResultadoDAL extends AbstractMapper {
         ]);
 
         $idResultado = $pdo->lastInsertId(); 
-        $resultado->setIdUsuario($idResultado);
+        $resultado->setIdResultado($idResultado);
     }
 
     public function get(): array {
@@ -24,9 +24,9 @@ class ResultadoDAL extends AbstractMapper {
         $registros = array();
 
         while($registro = $stmt->fetch(PDO::FETCH_ASSOC)) {
-            $resultado = new Resultado ($registro["idResultado"], $registro["fechaResultado"], $registro["calificacion"], $registro["cantidadErrores"], $registro["cantidadAciertos"], $registro["idExamen"]);
+            $resultado = new Resultado($registro["idResultado"], $registro["fechaResultado"], $registro["calificacion"], $registro["cantidadErrores"], $registro["cantidadAciertos"], $registro["idExamen"]);
 
-            $registros[] = $resultados;
+            $registros[] = $resultado;
         }
         return $registros;
     }

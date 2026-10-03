@@ -22,7 +22,7 @@ if ($_SESSION["rol"] !== "profesor") {
     <div class="container mt-5">
         <!-- Título -->
         <div class="mb-4">
-            <h1>Temas</h1>
+            <h1>Materia</h1>
         </div>
         <!-- Temas -->
         <div class="row g-3">
@@ -32,7 +32,7 @@ if ($_SESSION["rol"] !== "profesor") {
                 </a>
             </div>
             <div class="col-md-4">
-                <a href="#" class="text-decoration-none">
+                <a href="crearExamen.html" class="text-decoration-none">
                     <button type="button" class="btn btn-outline-dark w-100">Lengua</button>
                 </a>
             </div>
@@ -68,7 +68,7 @@ if ($_SESSION["rol"] !== "profesor") {
                 <a href="misExamenes.php" class="text-decoration-none text-dark">
                     <div class="card text-center p-4">
                         <div class="fs-1">📁</div>
-                        <h5 class="mt-3">Mis pruebas</h5>
+                        <h5 class="mt-3">Mis examenes</h5>
                     </div>
                 </a>
             </div>

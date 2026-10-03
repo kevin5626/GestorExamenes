@@ -1,9 +1,10 @@
 <?php
-// $nombre = $_POST["nombre"];
-// $apellido = $_POST["apellido"];
-// $email = $_POST["email"];
-// $contrasena = $_POST["contrasena"];
-// $tipoUsuario = $_POST["tipoUsuario"];
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+$nombre = $_POST["nombre"];
+$apellido = $_POST["apellido"];
+$email = $_POST["email"];
+$contrasena = $_POST["contrasena"];
+$tipoUsuario = $_POST["tipoUsuario"];
 
 require_once(__DIR__ . "/../Clases/Usuario.php");
 require_once(__DIR__ . "/../Clases/DAL/UsuarioDAL.php");
@@ -20,24 +21,25 @@ $dalProfesor = new ProfesorDAL();
 
 $bandera = false;
 
-// if ($tipoUsuario !== "profesor" && $tipoUsuario !== "alumno") {
-//     die("Debe seleccionar si es profesor o alumno.");
-// }
+if ($tipoUsuario !== "profesor" && $tipoUsuario !== "alumno") {
+    die("Debe seleccionar si es profesor o alumno.");
+}
 
 $contrasenaHash = password_hash($contrasena, PASSWORD_DEFAULT);
 
-$usuario = new Usuario(1, "Kevin", "Verón", "kevin.veorn@gmail.com", "123");
+$usuario = new Usuario(null, $nombre, $apellido, $email, $contrasenaHash);
 $dalUsuario -> insert($usuario);
 
-// // Asignamos el usuario a su tipo
-// if ($tipoUsuario === "profesor") {
-//     $profesor = new Profesor(null, $usuario -> getIdUsuario());
-//     $dalProfesor -> insertProfesor($profesor);
-// } else {
-//     $alumno = new Alumno(null, $usuario -> getIdUsuario());
-//     $dalAlumno -> insertAlumno($alumno);
-// }
-
+// Asignamos el usuario a su tipo
+if ($tipoUsuario === "profesor") {
+    $profesor = new Profesor(null, $usuario -> getIdUsuario());
+    $dalProfesor -> insert($profesor);
+} else {
+    $alumno = new Alumno(null, $usuario -> getIdUsuario());
+    $dalAlumno -> insert
+    ($alumno);
+}
+}
 // Intentamos registrar el rol (profesor/alumno)
 if ($tipoUsuario) {
     $bandera = true; 

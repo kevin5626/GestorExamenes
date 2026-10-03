@@ -3,90 +3,34 @@ require_once(__DIR__ . "/../Pregunta.php");
 require_once(__DIR__ . "/../AbstractMapper.php");
 
 class PreguntaDAL extends AbstractMapper {
-    public function insert($pregunta): void {
-        $conexion = mysqli_connect($this->servidor, $this->usuario, $this->contrasena, $this->basededatos) or die("Error al conectar: ");
-        mysqli_set_charset($conexion, 'utf8');
+    public function insert($pregunta) {
+        $pdo = $this->conectar();
+        $stmt = $pdo->prepare("INSERT INTO preguntas (materia, tema, subtema, dificultad, textoPregunta, respuestas, respuestaCorrecta, apariciones) VALUES(:tema, :subtema, :dificultad, :textoPregunta, :respuestas, :respuestaCorrecta, :apariciones);");
+        $stmt->execute([
+            ':materia'            => $pregunta->getMateria(),
+            ':tema'               => $pregunta->getTema(),
+            ':subtema'            => $pregunta->getSubtema(),
+            ':dificultad'         => $pregunta->getDificultad(),
+            ':textoPregunta'      => $pregunta->getTextoPregunta(),
+            ':respuestas'         => $pregunta->getRespuestas(),
+            ':respuestaCorrecta'  => $pregunta->getRespuestaCorrecta(),
+            ':apariciones'        => $pregunta->getApariciones(),
+        ]);
 
-        $respuestas = is_array($pregunta->getRespuestas()) ? json_encode($pregunta->getRespuestas()) : $pregunta->getRespuestas();
-
-        $consulta = sprintf(
-            "INSERT INTO preguntas (tema, subtema, dificultad, textoPregunta, respuestas, respuestaCorrecta, apariciones) VALUES('%s', '%s', '%s', '%s', '%s', '%s', '%s');",
-            $pregunta->getTema(),
-            $pregunta->getSubtema(),
-            $pregunta->getDificultad(),
-            $pregunta->getTextoPregunta(),
-            mysqli_real_escape_string($conexion, $respuestas),
-            $pregunta->getRespuestaCorrecta(),
-            $pregunta->getApariciones()
-        );
-
-        mysqli_query($conexion, $consulta);
-        $pregunta->setIdPregunta(mysqli_insert_id($conexion));
-        mysqli_close($conexion);
+        $idPregunta = $pdo->lastInsertId(); 
+        $pregunta->setIdPregunta($idPregunta);
     }
 
     public function get(): array {
-        $conexion = mysqli_connect($this->servidor, $this->usuario, $this->contrasena, $this->basededatos) or die("Error al conectar: ");
-        mysqli_set_charset($conexion, 'utf8');
+        $pdo = $this->conectar();
+        $stmt = $pdo->query("SELECT * FROM preguntas");
+        $registros = array();
 
-        $resultado = mysqli_query($conexion, "SELECT * FROM preguntas");
-        $registros = [];
-
-        while ($registro = mysqli_fetch_array($resultado, MYSQLI_ASSOC)) {
-            $pregunta = new Pregunta(
-                $registro["idPregunta"],
-                $registro["materia"] ?? '',
-                $registro["tema"],
-                $registro["subtema"],
-                $registro["dificultad"],
-                $registro["textoPregunta"],
-                $registro["respuestas"],
-                $registro["respuestaCorrecta"],
-                $registro["apariciones"]
-            );
+        while($registro = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $pregunta = new Pregunta($registro["idPregunta"], $registro["materia"], $registro["tema"], $registro["subtema"], $registro["dificultad"], $registro["textoPregunta"], $registro["respuestas"], $registro["respuestaCorrecta"], $registro["apariciones"]);
 
             $registros[] = $pregunta;
         }
-
-        mysqli_close($conexion);
-        return $registros;
-    }
-
-    public function obtenerPorTemaSubtemaDificultad(string $tema, string $subtema, string $dificultad, int $cantidad): array {
-        $conexion = mysqli_connect($this->servidor, $this->usuario, $this->contrasena, $this->basededatos) or die("Error al conectar: ");
-        mysqli_set_charset($conexion, 'utf8');
-
-        $consulta = "SELECT * FROM preguntas WHERE tema = ? AND subtema = ? AND dificultad = ? ORDER BY apariciones ASC, RAND() LIMIT ?";
-        $stmt = mysqli_prepare($conexion, $consulta);
-
-        if ($stmt === false) {
-            mysqli_close($conexion);
-            return [];
-        }
-
-        mysqli_stmt_bind_param($stmt, 'sssi', $tema, $subtema, $dificultad, $cantidad);
-        mysqli_stmt_execute($stmt);
-        $resultado = mysqli_stmt_get_result($stmt);
-
-        $registros = [];
-        while ($registro = mysqli_fetch_array($resultado, MYSQLI_ASSOC)) {
-            $pregunta = new Pregunta(
-                $registro["idPregunta"],
-                $registro["materia"] ?? '',
-                $registro["tema"],
-                $registro["subtema"],
-                $registro["dificultad"],
-                $registro["textoPregunta"],
-                $registro["respuestas"],
-                $registro["respuestaCorrecta"],
-                $registro["apariciones"]
-            );
-
-            $registros[] = $pregunta;
-        }
-
-        mysqli_stmt_close($stmt);
-        mysqli_close($conexion);
         return $registros;
     }
 }

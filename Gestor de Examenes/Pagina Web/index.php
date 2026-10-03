@@ -1,13 +1,13 @@
 <?php
 session_start();
 require_once(__DIR__ . "/../Clases/AbstractMapper.php");
+require_once(__DIR__ . "/../Clases/DAL/UsuarioDAL.php");
 $error = "";
-if(isset($_POST["Comparar"])) {
+if (isset($_POST["Comparar"])) {
     $email = $_POST["Email"];
     $contrasena = $_POST["contrasena"];
-
-    $consulta = new Manager();
-    $consulta -> verificarDatos($email, $contrasena);
+    $consulta = new UsuarioDAL();
+    $error = $consulta->login($email, $contrasena);
 }
 ?>
 

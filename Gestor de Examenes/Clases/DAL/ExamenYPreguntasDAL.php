@@ -4,38 +4,27 @@ require_once(__DIR__ . "/../AbstractMapper.php");
 
 class ExamenYPreguntaDAL extends AbstractMapper {
     public function insert($examenYPregunta) {
-        $conexion = mysqli_connect($this -> servidor, $this -> usuario, $this -> contrasena) or die ("Error al conectar: ");
-        mysqli_set_charset($conexion, 'utf8');
-        $baseDatos = mysqli_select_db($conexion, $this -> basededatos) or die ("Error seleccionar la BD: ");
+        $pdo = $this->conectar();
+        $stmt = $pdo->prepare("INSERT INTO examenesYPreguntas (nombre, apellido) VALUES(:nombre, :apellido);");
+        $stmt->execute([
+            ':nombre'     => $examenYPregunta->getNombre(),
+            ':apellido'   => $examenYPregunta->getApellido(),
+        ]);
 
-        $consulta = (sprintf("INSERT INTO examenesYPreguntas (nombre, apellido) VALUES('%s', '%s');",
-        $examenYPregunta -> getNombre(), $examenYPregunta -> getApellido()));
-
-        mysqli_query($conexion, $consulta);
-
-        $idTutor = mysqli_insert_id($conexion);
-        $examenYPregunta -> setIdTutor($idTutor);
-        
-        mysqli_close($conexion);
+        $examenYPregunta = $pdo->lastInsertId(); 
+        $examenYPregunta->setIdExamenYPregunta($examenYPregunta);
     }
 
     public function get(): array {
-        $conexion = mysqli_connect($this -> servidor, $this -> usuario, $this -> contrasena) or die ("Error al conectar: ");
-        mysqli_set_charset($conexion, 'utf8');
-        $baseDatos = mysqli_select_db($conexion, $this -> basededatos) or die ("Error seleccionar la BD: ");
-
-        $consulta = (sprintf("SELECT * FROM examenesYPreguntas"));
-        $resultado = mysqli_query($conexion, $consulta);
+        $pdo = $this->conectar();
+        $stmt = $pdo->query("SELECT * FROM examenesYPreguntas");
         $registros = array();
 
-        while($registro = mysqli_fetch_array($resultado)) {
-            $examenYPregunta = new Tutor ($registro["Id_Tutor"], $registro["nombre"], $registro["apellido"]);
+        while($registro = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $examenYPregunta = new ExamenYPregunta ($registro["idExamenYPreguntas"], $registro["nombre"], $registro["apellido"]);
 
             $registros[] = $examenYPregunta;
-        } 
-        
-        mysqli_close($conexion);
-
+        }
         return $registros;
     }
 }
