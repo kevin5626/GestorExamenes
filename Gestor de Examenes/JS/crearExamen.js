@@ -1,42 +1,56 @@
-function actualizarNumerosSubtemas() {
-    const subtemas = document.querySelectorAll(".subtema");
+function actualizarNumerosTemas() {
+    const temas = document.querySelectorAll(".tema");
 
-    subtemas.forEach(function (subtema, indice) {
+    temas.forEach(function (tema, indice) {
 
-        subtema.querySelector("h4").textContent = "Subtema " + (indice + 1);
+        tema.querySelector("h4").textContent = "Tema " + (indice + 1);
 
-        const selectSubtema = subtema.querySelector('[data-role="subtema"]');
-        const selectCantidad = subtema.querySelector('[data-role="cantidad"]');
-        const selectDificultad = subtema.querySelector('[data-role="dificultad"]');
+        const selectTema = tema.querySelector('[data-role="tema"]');
+        const selectSubtema = tema.querySelector('[data-role="subtema"]');
+        const selectCantidad = tema.querySelector('[data-role="cantidad"]');
+        const selectDificultad = tema.querySelector('[data-role="dificultad"]');
 
-        selectSubtema.name = "subtemas[" + indice + "][subtema]";
-        selectCantidad.name = "subtemas[" + indice + "][cantidad]";
-        selectDificultad.name = "subtemas[" + indice + "][dificultad]";
+        selectTema.name = "temas[" + indice + "][tema]";
+        selectSubtema.name = "temas[" + indice + "][subtema]";
+        selectCantidad.name = "temas[" + indice + "][cantidad]";
+        selectDificultad.name = "temas[" + indice + "][dificultad]";
     });
 }
-const boton = document.getElementById('agregarSubtema');
+const boton = document.getElementById('agregarTema');
 
 boton.addEventListener('click', function() {
-    const indice = document.querySelectorAll(".subtema").length;
-    const nuevoSubtema = document.createElement("div");
+    const indice = document.querySelectorAll(".tema").length;
+    const nuevoTema = document.createElement("div");
 
-    nuevoSubtema.classList.add("subtema", "border", "rounded", "p-3", "mb-3");
+    nuevoTema.classList.add("tema", "border", "rounded", "p-3", "mb-3");
 
-    nuevoSubtema.innerHTML = `
+    nuevoTema.innerHTML = `
         <div class="d-flex justify-content-between align-items-center mb-3">
             <h4 class="m-0">
-                Subtema ${indice + 1}
+                Tema ${indice + 1}
             </h4>
 
-            <button type="button" class="btn btn-danger btn-sm eliminarSubtema" onclick="eliminarSubtema(this)">
+            <button type="button" class="btn btn-danger btn-sm eliminarTema" onclick="eliminarTema(this)">
                 X
             </button>
         </div>
 
         <div class="mb-3">
+            <label class="form-label"> Tema: </label>
+
+            <select class="form-select" data-role="tema" name="temas[${indice}][tema]">
+                <option value=""> Seleccionar tema </option>
+                <option value="Algoritmos"> Algoritmos </option>
+                <option value="Logica"> Lógica </option>
+                <option value="Clases"> Clases </option>
+                <option value="JavaScript"> JavaScript </option>
+            </select>
+        </div>
+
+        <div class="mb-3">
             <label class="form-label"> Subtema: </label>
 
-            <select class="form-select" data-role="subtema" name="subtemas[${indice}][subtema]">
+            <select class="form-select" data-role="subtema" name="temas[${indice}][subtema]">
                 <option value=""> Seleccionar subtema </option>
                 <option value="Algoritmos"> Algoritmos </option>
                 <option value="Logica"> Lógica </option>
@@ -48,7 +62,7 @@ boton.addEventListener('click', function() {
         <div class="mb-3">
             <label class="form-label">Cantidad de preguntas:</label>
 
-            <select class="form-select" data-role="cantidad" name="subtemas[${indice}][cantidad]">
+            <select class="form-select" data-role="cantidad" name="temas[${indice}][cantidad]">
                 <option value="1">1</option>
                 <option value="2">2</option>
                 <option value="3">3</option>
@@ -61,7 +75,7 @@ boton.addEventListener('click', function() {
         <div>
             <label class="form-label"> Dificultad: </label>
 
-            <select class="form-select" data-role="dificultad" name="subtemas[${indice}][dificultad]">
+            <select class="form-select" data-role="dificultad" name="temas[${indice}][dificultad]">
                 <option value="Facil"> Fácil </option>
                 <option value="Intermedio"> Intermedio </option>
                 <option value="Dificil"> Difícil </option>
@@ -69,19 +83,19 @@ boton.addEventListener('click', function() {
         </div>
     `;
 
-    document.getElementById("contenedorSubtemas").appendChild(nuevoSubtema);
+    document.getElementById("contenedorTemas").appendChild(nuevoTema);
 });
 
-function eliminarSubtema(boton) {
-    const subtemas = document.querySelectorAll(".subtema");
+function eliminarTema(boton) {
+    const temas = document.querySelectorAll(".tema");
 
-    if (subtemas.length <= 1) {
+    if (temas.length <= 1) {
         alert("Debe existir al menos un tema.");
         return;
     }
 
-    const subtema = boton.closest(".subtema");
-    subtema.remove();
+    const tema = boton.closest(".tema");
+    tema.remove();
 
-    actualizarNumerosSubtemas();
+    actualizarNumerosTemas();
 }

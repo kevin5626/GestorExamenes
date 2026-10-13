@@ -16,18 +16,17 @@
                     <div class="card p-4">
                         <p>Seleccione los temas que desea incluir en el examen.</p>
 
-                        <button type="button" class="btn btn-primary mb-4" id="agregarSubtema">+ Agregar tema</button>
+                        <button type="button" class="btn btn-primary mb-4" id="agregarTema">+ Agregar tema</button>
 
-                        <div id="contenedorSubtemas">
-                            <div class="subtema border rounded p-3 mb-3">
+                        <div id="contenedorTemas">
+                            <div class="tema border rounded p-3 mb-3">
                                 <div class="d-flex justify-content-between align-items-center mb-3">
                                     <h4 class="m-0">Tema 1</h4>
-                                    <button type="button" class="btn btn-danger btn-sm eliminarSubtema">X</button>
+                                    <button type="button" class="btn btn-danger btn-sm eliminarTema">X</button>
                                 </div>
 
                                 <div class="mb-3">
-                                    <label class="form-label">Tema:</label>
-                                    <select class="form-select" data-role="subtema" name="subtemas[0][subtema]">
+                                    <select class="form-select" data-role="tema" name="temas[0][tema]">
                                         <option value="">Seleccionar tema</option>
                                         <option value="Algoritmos">Algoritmos</option>
                                         <option value="Logica">Lógica</option>
@@ -38,7 +37,7 @@
 
                                 <div class="mb-3">
                                     <label class="form-label">Subtema:</label>
-                                    <select class="form-select" data-role="subtema" name="subtemas[0][subtema]">
+                                    <select class="form-select" data-role="subtema" name="temas[0][subtema]">
                                         <option value="">Seleccionar subtema</option>
                                         <option value="Algoritmos">Algoritmos</option>
                                         <option value="Logica">Lógica</option>
@@ -49,7 +48,7 @@
 
                                 <div class="mb-3">
                                     <label class="form-label">Cantidad de preguntas:</label>
-                                    <select class="form-select" data-role="cantidad" name="subtemas[0][cantidad]">
+                                    <select class="form-select" data-role="cantidad" name="temas[0][cantidad]">
                                         <option value="1">1</option>
                                         <option value="2">2</option>
                                         <option value="3">3</option>
@@ -61,7 +60,7 @@
 
                                 <div>
                                     <label class="form-label">Dificultad:</label>
-                                    <select class="form-select" data-role="dificultad" name="subtemas[0][dificultad]">
+                                    <select class="form-select" data-role="dificultad" name="temas[0][dificultad]">
                                         <option value="Facil">Fácil</option>
                                         <option value="Intermedio">Intermedio</option>
                                         <option value="Dificil">Difícil</option>
