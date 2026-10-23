@@ -3,6 +3,14 @@ require_once(__DIR__ . "/../Pregunta.php");
 require_once(__DIR__ . "/../AbstractMapper.php");
 
 class PreguntaDAL extends AbstractMapper {
+    public function obtenerSubtemasPorTema(string $tema): array {
+        $pdo = $this->conectar();
+        $stmt = $pdo->prepare("SELECT DISTINCT subtema FROM preguntas WHERE tema = :tema AND subtema <> '' ORDER BY subtema");
+        $stmt->execute([':tema' => $tema]);
+
+        return $stmt->fetchAll(PDO::FETCH_COLUMN);
+    }
+
     public function insert($pregunta) {
         $pdo = $this->conectar();
         $stmt = $pdo->prepare("INSERT INTO preguntas (materia, tema, subtema, dificultad, textoPregunta, respuestas, respuestaCorrecta, apariciones) VALUES(:tema, :subtema, :dificultad, :textoPregunta, :respuestas, :respuestaCorrecta, :apariciones);");

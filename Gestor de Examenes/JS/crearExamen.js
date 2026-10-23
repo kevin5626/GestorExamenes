@@ -16,6 +16,54 @@ function actualizarNumerosTemas() {
         selectDificultad.name = "temas[" + indice + "][dificultad]";
     });
 }
+
+async function cargarSubtemas(selectTema) {
+    const selectSubtema = selectTema.closest(".tema").querySelector('[data-role="subtema"]');
+    const temaSeleccionado = selectTema.value;
+
+    selectSubtema.innerHTML = '<option value="">Seleccionar subtema</option>';
+    selectSubtema.disabled = true;
+
+    if (!temaSeleccionado) {
+        return;
+    }
+
+    try {
+        const respuesta = await fetch("../PHP/obtenerSubtemas.php", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8"
+            },
+            body: new URLSearchParams({ tema: temaSeleccionado })
+        });
+        if (!respuesta.ok) {
+            throw new Error("No se pudieron cargar los subtemas");
+        }
+
+        const subtemas = await respuesta.json();
+        if (selectTema.value !== temaSeleccionado) {
+            return;
+        }
+
+        subtemas.forEach(function (subtema) {
+            const opcion = document.createElement("option");
+            opcion.value = subtema;
+            opcion.textContent = subtema;
+            selectSubtema.appendChild(opcion);
+        });
+
+        selectSubtema.disabled = subtemas.length === 0;
+    } catch (error) {
+        selectSubtema.innerHTML = '<option value="">Error al cargar subtemas</option>';
+    }
+}
+
+document.getElementById("contenedorTemas").addEventListener("change", function (evento) {
+    if (evento.target.matches('[data-role="tema"]')) {
+        cargarSubtemas(evento.target);
+    }
+});
+
 const boton = document.getElementById('agregarTema');
 
 boton.addEventListener('click', function() {
@@ -52,10 +100,6 @@ boton.addEventListener('click', function() {
 
             <select class="form-select" data-role="subtema" name="temas[${indice}][subtema]">
                 <option value=""> Seleccionar subtema </option>
-                <option value="Algoritmos"> Algoritmos </option>
-                <option value="Logica"> Lógica </option>
-                <option value="Clases"> Clases </option>
-                <option value="JavaScript"> JavaScript </option>
             </select>
         </div>
 
