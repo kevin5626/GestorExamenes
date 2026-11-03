@@ -27,34 +27,34 @@ if ($_SESSION["rol"] !== "profesor") {
         <!-- Temas -->
         <div class="row g-3">
             <div class="col-md-4">
-                <a href="crear_examen.html" class="text-decoration-none">
-                    <button type="button" class="btn btn-outline-dark w-100">Programación</button>
-                </a>
+                <form action="crear_examen.php" method="get">
+                    <button type="submit" name="materia" value="Programación" class="btn btn-outline-dark w-100">Programación</button>
+                </form>
             </div>
             <div class="col-md-4">
-                <a href="crear_examen.html" class="text-decoration-none">
-                    <button type="button" class="btn btn-outline-dark w-100">Lengua</button>
-                </a>
+                <form action="crear_examen.php" method="get">
+                    <button type="submit" name="materia" value="Lenguaje" class="btn btn-outline-dark w-100">Lenguaje</button>
+                </form>
             </div>
             <div class="col-md-4">
-                <a href="#" class="text-decoration-none">
-                    <button type="button" class="btn btn-outline-dark w-100">Historia</button>
-                </a>
+                <form action="crear_examen.php" method="get">
+                    <button type="submit" name="materia" value="Historia" class="btn btn-outline-dark w-100">Historia</button>
+                </form>
             </div>
             <div class="col-md-4">
-                <a href="#" class="text-decoration-none">
-                    <button type="button" class="btn btn-outline-dark w-100">Geografía</button>
-                </a>
+                <form action="crear_examen.php" method="get">
+                    <button type="submit" name="materia" value="Geografia" class="btn btn-outline-dark w-100">Geografia</button>
+                </form>
             </div>
             <div class="col-md-4">
-                <a href="#" class="text-decoration-none">
-                    <button type="button" class="btn btn-outline-dark w-100">Inglés</button>
-                </a>
+                <form action="crear_examen.php" method="get">
+                    <button type="submit" name="materia" value="Ingles" class="btn btn-outline-dark w-100">Ingles</button>
+                </form>
             </div>
             <div class="col-md-4">
-                <a href="#" class="text-decoration-none">
-                    <button type="button" class="btn btn-outline-dark w-100">Programación</button>
-                </a>
+                <form action="crear_examen.php" method="get">
+                    <button type="submit" name="materia" value="Biologia" class="btn btn-outline-dark w-100">Biologia</button>
+                </form>
             </div>
         </div>
         <hr class="my-5">

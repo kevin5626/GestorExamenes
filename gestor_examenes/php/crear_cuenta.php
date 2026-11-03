@@ -46,25 +46,8 @@ if ($tipoUsuario === "profesor") {
 }
 // Intentamos registrar el rol (profesor/alumno)
 if ($tipoUsuario) {
-    
-    $bandera = true; 
-    echo "<div id='mensaje' class='row justify-content-center w-100'>";
-    echo "<div class='col-7 col-sm-6 col-lg-3 alert alert-success mx-5 text-center mt-3' role='alert'>";
-    echo "¡Usuario registrado!";
-    echo "<br>";
-    echo "<a href='../pagina_web/index.php' class='btn btn-outline-dark mt-2'>Iniciar Sesion</a>";
-    echo "</div>";
-    echo "</div>";
-    echo "<script>
-        setTimeout(function() {
-        const mensaje = document.getElementById('mensaje');
-        if(mensaje) {
-            mensaje.style.transition = 'opacity 1s';
-            mensaje.style.opacity = '0';
-            setTimeout(function() { mensaje.style.display = 'none'; }, 1000);
-        }
-        }, 3000);
-        </script>";
+    header("Location: ../pagina_web/index.php?registro=exito");
+    exit;
     } else {
         echo "Error al asignar el tipo de usuario";
     }

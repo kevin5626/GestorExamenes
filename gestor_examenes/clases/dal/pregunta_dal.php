@@ -10,11 +10,24 @@ class PreguntaDAL extends AbstractMapper {
 
         return $stmt->fetchAll(PDO::FETCH_COLUMN);
     }
-    
-    public function obtenerSubtemasPorTema(string $tema): array {
+
+    public function obtenerTemasPorMateria(string $materia): array {
         $pdo = $this->conectar();
-        $stmt = $pdo->prepare("SELECT DISTINCT subtema FROM preguntas WHERE tema = :tema AND subtema <> '' ORDER BY subtema");
-        $stmt->execute([':tema' => $tema]);
+        $stmt = $pdo->prepare("SELECT DISTINCT tema FROM preguntas WHERE materia = :materia AND tema <> '' ORDER BY tema");
+        $stmt->execute([':materia' => $materia]);
+
+        return $stmt->fetchAll(PDO::FETCH_COLUMN);
+    }
+    
+    public function obtenerSubtemasPorTema(string $tema, ?string $materia = null): array {
+        $pdo = $this->conectar();
+        $filtroMateria = $materia !== null && $materia !== '' ? ' AND materia = :materia' : '';
+        $stmt = $pdo->prepare("SELECT DISTINCT subtema FROM preguntas WHERE tema = :tema AND subtema <> ''" . $filtroMateria . " ORDER BY subtema");
+        $parametros = [':tema' => $tema];
+        if ($filtroMateria !== '') {
+            $parametros[':materia'] = $materia;
+        }
+        $stmt->execute($parametros);
 
         return $stmt->fetchAll(PDO::FETCH_COLUMN);
     }
@@ -64,9 +77,10 @@ class PreguntaDAL extends AbstractMapper {
         return new Pregunta($registro["idPregunta"], $registro["tema"], $registro["subtema"], $registro["dificultad"], $registro["textoPregunta"], $registro["respuestas"], $registro["respuestaCorrecta"], $registro["apariciones"]);
     }
 
-    public function obtenerPorTemaSubtemaDificultad($tema, $subtema, $dificultad, $cantidad): array {
+    public function obtenerPorTemaSubtemaDificultad($tema, $subtema, $dificultad, $cantidad, ?string $materia = null): array {
         $pdo = $this->conectar();
         $cantidad = max(1, (int) $cantidad);
+        $filtroMateria = $materia !== null && $materia !== '' ? ' AND materia = :materia' : '';
 
         $stmt = $pdo->prepare("
                         SELECT *
@@ -74,14 +88,19 @@ class PreguntaDAL extends AbstractMapper {
                         WHERE tema = :tema
                             AND subtema = :subtema
                             AND dificultad = :dificultad
+                            " . $filtroMateria . "
             ORDER BY RAND()
             LIMIT " . $cantidad . "
         ");
-        $stmt->execute([
+        $parametros = [
             ':tema'        => $tema,
             ':subtema'     => $subtema,
             ':dificultad'  => $dificultad,
-        ]);
+        ];
+        if ($filtroMateria !== '') {
+            $parametros[':materia'] = $materia;
+        }
+        $stmt->execute($parametros);
 
         $registros = array();
         while ($registro = $stmt->fetch(PDO::FETCH_ASSOC)) {

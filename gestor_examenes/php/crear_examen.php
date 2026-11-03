@@ -81,10 +81,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["guardarExamen"])) {
         error_log("Error al guardar el examen: " . $error->getMessage());
         http_response_code(500);
         $mensajeError = "No se pudo guardar el examen en la base de datos.";
-        $servidor = strtolower((string) ($_SERVER["SERVER_NAME"] ?? ""));
-        if (in_array($servidor, ["localhost", "127.0.0.1", "::1"], true)) {
-            $mensajeError .= " " . $error->getMessage();
-        }
         echo json_encode(["ok" => false, "error" => $mensajeError]);
         exit;
     }
@@ -92,6 +88,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["guardarExamen"])) {
 
 if (!empty($temasSeleccionados) && empty($preguntas) && !isset($_POST["guardarExamen"])) {
     $preguntaDAL = new PreguntaDAL();
+    $materia = trim((string) ($_SESSION["materia"] ?? ""));
+    $temasMateria = $materia !== "" ? $preguntaDAL->obtenerTemasPorMateria($materia) : [];
 
     foreach ($temasSeleccionados as $bloque) {
         if (!is_array($bloque)) {
@@ -99,6 +97,9 @@ if (!empty($temasSeleccionados) && empty($preguntas) && !isset($_POST["guardarEx
         }
 
         $temaBloque = trim((string) ($bloque["tema"] ?? $tema));
+        if ($materia !== "" && !in_array($temaBloque, $temasMateria, true)) {
+            continue;
+        }
         $subtema = trim((string) ($bloque["subtema"] ?? ""));
         $dificultad = trim((string) ($bloque["dificultad"] ?? "Facil"));
         $cantidad = isset($bloque["cantidad"]) ? max(1, (int) $bloque["cantidad"]) : 1;
@@ -108,7 +109,7 @@ if (!empty($temasSeleccionados) && empty($preguntas) && !isset($_POST["guardarEx
         }
 
         $temaConsulta = $temaBloque !== "" ? $temaBloque : $tema;
-        $preguntasDelSubtema = $preguntaDAL->obtenerPorTemaSubtemaDificultad($temaConsulta, $subtema, $dificultad, $cantidad);
+        $preguntasDelSubtema = $preguntaDAL->obtenerPorTemaSubtemaDificultad($temaConsulta, $subtema, $dificultad, $cantidad, $materia);
         foreach ($preguntasDelSubtema as $pregunta) {
             $preguntas[] = $pregunta;
         }

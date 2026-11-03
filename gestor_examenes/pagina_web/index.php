@@ -24,6 +24,24 @@ if (isset($_POST["Comparar"])) {
             <div class="col-md-6">
                 <div class="card p-4">
                     <h1 class="text-center mb-4">Inicio de sesión</h1>
+                    <?php if (isset($_GET["registro"]) && $_GET["registro"] === "exito") { ?>
+                        <div class="alert alert-success ocultar-3s text-center mb-4" role="alert">
+                            ¡Usuario registrado con éxito!
+                        </div>
+             <style>
+                   .ocultar-3s {
+                   animation: ocultarDiv 0.5s ease 3s forwards;
+                     }
+
+                       @keyframes ocultarDiv {
+                         to {
+                             opacity: 0;
+                           visibility: hidden;
+                           display: none;
+                            }
+                     }
+            </style>
+                    <?php } ?>
                     <form method="post">
                         <div class="mb-3">
                             <label for="Email" class="form-label">Email:</label>
