@@ -30,13 +30,12 @@ if ($tipoUsuario !== "profesor" && $tipoUsuario !== "alumno") {
 $contrasenaHash = password_hash($contrasena, PASSWORD_DEFAULT);
 
 $usuario = new Usuario(null, $nombre, $apellido, $email, $contrasenaHash);
+$_SESSION["Usuario"] = serialize($usuario);
 $dalUsuario -> insert($usuario);
 
 // Asignamos el usuario a su tipo
 if ($tipoUsuario === "profesor") {
-    $profesor = new Profesor(null
-    
-    , $usuario -> getIdUsuario());
+    $profesor = new Profesor(null, $usuario -> getIdUsuario());
     $dalProfesor -> insert($profesor);
 } else {
     $alumno = new Alumno(null, $usuario -> getIdUsuario());

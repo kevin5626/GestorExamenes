@@ -4,13 +4,13 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Pruebas recientes</title>
+    <title>Exámenes recientes</title>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
     <div class="container mt-5">
-        <h1 class="mb-4">Pruebas recientes</h1>
+        <h1 class="mb-4">Exámenes recientes</h1>
         <?php if ($errorCarga): ?>
             <div class="alert alert-danger" role="alert">No se pudieron cargar tus pruebas. Inténtalo de nuevo más tarde.</div>
         <?php else: ?>

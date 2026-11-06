@@ -1,14 +1,49 @@
+<?php
+session_start();
+if (!isset($_SESSION["idUsuario"])) {
+    header("Location: index.php");
+    exit;
+}
+// if ($_SESSION["rol"] !== "profesor") {
+//     header("Location: inicio_alumno.php");
+//     exit;
+// }
+?>
+
 
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../estilos/style.css">
     <title>Ingresar a examen</title>
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 
 <body>
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <div class="container-fluid px-4">
+        <div class="d-flex">
+            <h4 class="me-3" style="font-family: 'Cal Sans', sans-serif;">Gestor de Examenes</h4>
+            <img src="../imagenes/icono_examen.png" width="30" height="30">
+        </div>
+        </ul>
+            <div class="d-flex">
+                <div class="align-items-center justify-content-center text-center me-4 p-0">
+                    <img src="../imagenes/icono_persona.png" alt="Usuario" width="30" height="30">
+                    <h6><?php echo $_SESSION["nombre"]. " ". $_SESSION["apellido"]; ?></h6>
+                </div>
+                <div class="mt-2">
+                    <a href="../php/cerrar_sesion.php" class="btn btn-danger">
+                        <img src="../imagenes/icono_puerta.png" alt="Cerrar sesión" width="20" height="20">
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    </nav>
+
     <div class="container mt-5">
         <div class="row justify-content-center">
             <div class="col-md-6">
@@ -30,6 +65,23 @@
                         </div>
                     </form>
                 </div>
+            </div>
+            <hr class="mt-4">
+        <!-- Mis exámenes -->
+        <div class="mb-4">
+            <h2>Exámenes realizados</h2>
+        </div>
+        <div class="row justify-content-center g-4">
+            <!-- Carpeta 1 -->
+            <div class="col-md-4 zoom">
+                <a href="pruebas_recientes.php" class="text-decoration-none text-dark">
+                    <div class="card text-center p-4">
+                        <div class="fs-1">
+                            <img src="../imagenes/icono_carpeta1.png" width="50" height="50">
+                        </div>
+                        <h5 class="mt-3">Exámenes</h5>
+                    </div>
+                </a>
             </div>
         </div>
     </div>

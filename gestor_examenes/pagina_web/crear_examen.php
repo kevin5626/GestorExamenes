@@ -17,10 +17,11 @@ $_SESSION['materia'] = $materia;
     <meta charset="UTF-8">
     <title>Crear examen</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../estilos/style.css">
 </head>
 <body>
-    <div class="container mt-4">
-        <h1 class="mb-4"><?php echo htmlspecialchars($materia, ENT_QUOTES, 'UTF-8'); ?></h1>
+    <div class="container mt-3">
+        <h1 class="mb-4" style="font-family: 'Momo Trust Display', sans-serif;"><?php echo htmlspecialchars($materia, ENT_QUOTES, 'UTF-8'); ?></h1>
 
         <div class="row">
             <div class="col-md-5">
@@ -33,7 +34,7 @@ $_SESSION['materia'] = $materia;
                         <div id="contenedorTemas">
                             <div class="tema border rounded p-3 mb-3">
                                 <div class="d-flex justify-content-between align-items-center mb-3">
-                                    <h4 class="m-0">Tema 1</h4>
+                                    <h4 class="m-0" style="font-family: 'Dm-Sans', sans-serif;">Tema 1</h4>
                                     <button type="button" class="btn btn-danger btn-sm eliminarTema">X</button>
                                 </div>
 

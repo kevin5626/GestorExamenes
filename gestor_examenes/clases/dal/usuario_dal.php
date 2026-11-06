@@ -52,6 +52,7 @@ class UsuarioDAL extends AbstractMapper {
             if (password_verify($contrasena, $datos["contrasena"])) {
                 $_SESSION["idUsuario"] = $datos["idUsuario"];
                 $_SESSION["nombre"] = $datos["nombre"];
+                $_SESSION["apellido"] = $datos["apellido"];
                 $_SESSION["email"] = $datos["email"];
                 if ($datos["idProfesor"] !== null) {
                     $_SESSION["rol"] = "profesor";
