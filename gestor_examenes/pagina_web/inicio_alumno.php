@@ -4,10 +4,6 @@ if (!isset($_SESSION["idUsuario"])) {
     header("Location: index.php");
     exit;
 }
-// if ($_SESSION["rol"] !== "profesor") {
-//     header("Location: inicio_alumno.php");
-//     exit;
-// }
 ?>
 
 
@@ -53,7 +49,7 @@ if (!isset($_SESSION["idUsuario"])) {
                     <p class="text-center mb-4">Ingrese el código del examen proporcionado por el profesor.</p>
                     <form action="examen.php" method="get">
                         <div class="mb-4">
-                            <label for="id" class="form-label">ID del examen:</label>
+                            <label for="id" class="form-label">ID del examen</label>
                             <input type="number" class="form-control" id="id" name="id" placeholder="Ingrese el ID" required>
                         </div>
                         <div class="d-flex justify-content-between">

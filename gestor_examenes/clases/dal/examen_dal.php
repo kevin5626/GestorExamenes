@@ -53,6 +53,25 @@ class ExamenDAL extends abstractMapper {
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    public function obtenerResultadosPorAlumno(int $idAlumno): array {
+        $pdo = $this->conectar();
+        $stmt = $pdo->prepare("\n            SELECT
+                e.idExamen,
+                e.tema,
+                r.fechaResultado,
+                r.calificacion,
+                r.cantidadAciertos,
+                r.cantidadErrores
+            FROM resultados r
+            INNER JOIN examenes e ON e.idExamen = r.idExamen
+            WHERE r.idAlumno = :idAlumno
+            ORDER BY r.fechaResultado DESC
+        ");
+        $stmt->execute([':idAlumno' => $idAlumno]);
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
     public function actualizarEnlaceAcceso($examen): void {
         $pdo = $this->conectar();
         $stmt = $pdo->prepare("UPDATE examenes SET enlaceAcceso = :enlaceAcceso WHERE idExamen = :idExamen");

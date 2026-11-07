@@ -20,7 +20,18 @@ $resultado = null;
 $error = "";
 $idExamen = (int) ($_POST["id"] ?? 0);
 
-if ($_SERVER["REQUEST_METHOD"] !== "POST" || $idExamen <= 0) {
+if ($_SERVER["REQUEST_METHOD"] === "GET" && isset($_SESSION["ultimoResultado"]) && is_array($_SESSION["ultimoResultado"])) {
+    $datosResultado = $_SESSION["ultimoResultado"];
+    $resultado = new Resultado(
+        (int) $datosResultado["idResultado"],
+        new DateTime($datosResultado["fechaResultado"]),
+        (int) $datosResultado["calificacion"],
+        (int) $datosResultado["cantidadErrores"],
+        (int) $datosResultado["cantidadAciertos"],
+        (int) $datosResultado["idExamen"],
+        (int) $datosResultado["idAlumno"]
+    );
+} elseif ($_SERVER["REQUEST_METHOD"] !== "POST" || $idExamen <= 0) {
     $error = "No se recibió un examen válido.";
 } else {
     try {
@@ -56,6 +67,17 @@ if ($_SERVER["REQUEST_METHOD"] !== "POST" || $idExamen <= 0) {
 
                 $resultadoDAL = new ResultadoDAL();
                 $resultadoDAL->insert($resultado);
+                $_SESSION["ultimoResultado"] = [
+                    "idResultado" => $resultado->getIdResultado(),
+                    "fechaResultado" => $resultado->getFechaResultado()->format('Y-m-d H:i:s'),
+                    "calificacion" => $resultado->getCalificacion(),
+                    "cantidadErrores" => $resultado->getCantidadErrores(),
+                    "cantidadAciertos" => $resultado->getCantidadAciertos(),
+                    "idExamen" => $resultado->getIdExamen(),
+                    "idAlumno" => $resultado->getIdAlumno()
+                ];
+                header("Location: resultado_alumno.php");
+                exit;
             }
         }
     } catch (Exception $e) {
@@ -82,7 +104,7 @@ if ($_SERVER["REQUEST_METHOD"] !== "POST" || $idExamen <= 0) {
                     <p><strong>ID del resultado:</strong> <?php echo $resultado->getIdResultado(); ?></p>
                     <p><strong>ID del examen:</strong> <?php echo $resultado->getIdExamen(); ?></p>
                     <p><strong>ID del alumno:</strong> <?php echo $resultado->getIdAlumno(); ?></p>
-                    <p><strong>Alumno:</strong> <?php echo htmlspecialchars((string) ($_SESSION["nombre"] ?? "" ), ENT_QUOTES, 'UTF-8'). htmlspecialchars((string) ($_SESSION["apellido"] ?? "" ), ENT_QUOTES, 'UTF-8'); ?></p>
+                    <p><strong>Alumno:</strong> <?php echo htmlspecialchars((string) ($_SESSION["nombre"] ?? "" ), ENT_QUOTES, 'UTF-8'). " ". htmlspecialchars((string) ($_SESSION["apellido"] ?? "" ), ENT_QUOTES, 'UTF-8'); ?></p>
                     <p><strong>Fecha:</strong> <?php echo htmlspecialchars($resultado->getFechaResultado()->format('Y-m-d H:i:s'), ENT_QUOTES, 'UTF-8'); ?></p>
                     <p><strong>Calificación:</strong> <?php echo $resultado->getCalificacion(); ?>/10</p>
                     <p><strong>Aciertos:</strong> <?php echo $resultado->getCantidadAciertos(); ?></p>

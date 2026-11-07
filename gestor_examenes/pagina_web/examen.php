@@ -43,12 +43,7 @@ if ($idExamen > 0) {
         <div class="text-center mb-4">
             <h1>Examen de <?php echo htmlspecialchars($examen->getTema(), ENT_QUOTES, 'UTF-8'); ?></h1>
             <p>Responda las siguientes preguntas.</p>
-            <p><strong>ID:</strong> <?php echo (int) $examen->getIdExamen(); ?>
-                <?php if ($examen->getEnlaceAcceso() !== ""): ?>
-                    | <strong>Enlace de acceso:</strong>
-                    <a href="<?php echo htmlspecialchars($examen->getEnlaceAcceso(), ENT_QUOTES, 'UTF-8'); ?>">Abrir examen</a>
-                <?php endif; ?>
-            </p>
+            <p><strong>ID de acceso:</strong> <?php echo (int) $examen->getIdExamen(); ?></p>
         </div>
 
         <?php if (empty($preguntas)): ?>
@@ -103,11 +98,13 @@ if ($idExamen > 0) {
                 </div>
             </div>
             <?php endforeach; ?>
-            <div class="text-center mb-5">
-                <button type="submit" class="btn btn-success btn-lg">
-                    Entregar examen
-                </button>
-            </div>
+            <?php 
+            if($_SESSION["rol"] === "alumno") {
+                echo "<div class='text-center mb-5'>";
+                echo "<button type='submit' class='btn btn-success btn-lg'>Entregar examen</button>";
+                echo "</div>";
+            }
+            ?>
         </form>
         <?php endif; ?>
         <?php endif; ?>

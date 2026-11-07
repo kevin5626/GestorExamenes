@@ -15,15 +15,16 @@ if (isset($_POST["Comparar"])) {
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Inicio de sesión</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../estilos/style.css">
+    <title>Inicio de sesión</title>
 </head>
 <body>
     <div class="container mt-5">
         <div class="row justify-content-center">
             <div class="col-md-6">
-                <div class="card p-4">
-                    <h1 class="text-center mb-4">Inicio de sesión</h1>
+                <div class="card py-4 px-5">
+                    <h1 class="text-center mb-3" style="font-family: 'Dm Sans', sans-serif">Inicio de sesión</h1>
                     <?php if (isset($_GET["registro"]) && $_GET["registro"] === "exito") { ?>
                         <div class="alert alert-success ocultar-3s text-center mb-4" role="alert">
                             ¡Usuario registrado con éxito!
@@ -44,15 +45,15 @@ if (isset($_POST["Comparar"])) {
                     <?php } ?>
                     <form method="post">
                         <div class="mb-3">
-                            <label for="Email" class="form-label">Email:</label>
-                            <input type="email" class="form-control" id="Email" name="Email" required>
+                            <label for="Email" class="form-label">Email</label>
+                            <input type="email" class="form-control" style="border-radius: 25px" id="Email" name="Email" required>
                         </div>
                         <div class="mb-3">
-                            <label for="contrasena" class="form-label">Contraseña:</label>
-                            <input type="password" class="form-control" id="contrasena" name="contrasena" required>
+                            <label for="contrasena" class="form-label">Contraseña</label>
+                            <input type="password" class="form-control" style="border-radius: 25px" id="contrasena" name="contrasena" required>
                         </div>
                         <div class="d-grid">
-                            <input type="submit" class="btn btn-primary boton" name="Comparar" value="Iniciar sesión">
+                            <input type="submit" class="btn btn-primary boton mt-2" name="Comparar" value="Iniciar sesión">
                         </div>
                            <?php if ($error !== "") { ?>
                         <div class="alert alert-danger text-center mb-3 mt-4">

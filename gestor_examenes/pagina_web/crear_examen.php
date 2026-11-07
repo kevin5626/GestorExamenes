@@ -21,9 +21,12 @@ $_SESSION['materia'] = $materia;
 </head>
 <body>
     <div class="container mt-3">
-        <h1 class="mb-4" style="font-family: 'Momo Trust Display', sans-serif;"><?php echo htmlspecialchars($materia, ENT_QUOTES, 'UTF-8'); ?></h1>
+        <div class="d-flex justify-content-between align-items-center">
+            <h1 class="mb-4" style="font-family: 'Momo Trust Display', sans-serif;"><?php echo htmlspecialchars($materia, ENT_QUOTES, 'UTF-8'); ?></h1>
+            <button class="btn btn-secondary mb-4" onclick="window.location.href='inicio_profesor.php'">Volver</button>
+        </div>
 
-        <div class="row">
+        <div class="row g-3">
             <div class="col-md-5">
                 <form id="generarExamenForm" method="post" action="../php/crear_examen.php">
                     <div class="card p-4">
@@ -46,7 +49,7 @@ $_SESSION['materia'] = $materia;
                                 </div>
 
                                 <div class="mb-3">
-                                    <label class="form-label">Subtema:</label>
+                                    <label class="form-label">Subtema</label>
                                     <select class="form-select" data-role="subtema" name="temas[0][subtema]" disabled>
                                         <option value="">Seleccionar subtema</option>
                                 
@@ -54,7 +57,7 @@ $_SESSION['materia'] = $materia;
                                 </div>
 
                                 <div class="mb-3">
-                                    <label class="form-label">Cantidad de preguntas:</label>
+                                    <label class="form-label">Cantidad de preguntas</label>
                                     <select class="form-select" data-role="cantidad" name="temas[0][cantidad]">
                                         <option value="1">1</option>
                                         <option value="2">2</option>
@@ -66,7 +69,7 @@ $_SESSION['materia'] = $materia;
                                 </div>
 
                                 <div>
-                                    <label class="form-label">Dificultad:</label>
+                                    <label class="form-label">Dificultad</label>
                                     <select class="form-select" data-role="dificultad" name="temas[0][dificultad]">
                                         <option value="Facil">Fácil</option>
                                         <option value="Intermedio">Intermedio</option>
@@ -84,11 +87,11 @@ $_SESSION['materia'] = $materia;
             </div>
 
             <div class="col-md-7">
-                <div class="card p-4">
-                    <h2>Modelo de examen</h2>
-                    <p>Aquí se muestran las preguntas seleccionadas para el examen.</p>
+                <div class="card p-3">
+                    <h2 class="text-center">Modelo de examen</h2>
+                    <p class="text-center">Aquí se muestran las preguntas seleccionadas para el examen.</p>
                     <div id="preguntas">
-                        <p class="text-muted">Aún no se han generado preguntas.</p>
+                        <p class="text-muted text-center">Aún no se han generado preguntas.</p>
                     </div>
                 </div>
             </div>

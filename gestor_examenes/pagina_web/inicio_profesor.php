@@ -52,32 +52,32 @@ if ($_SESSION["rol"] !== "profesor") {
         <div class="row g-3">
             <div class="col-md-4 zoom">
                 <form action="crear_examen.php" method="get">
-                    <button type="submit" name="materia" value="Programación" class="btn btn-outline-dark w-100" style="font-family: 'Cal Sans', sans-serif;">Programación</button>
+                    <button type="submit" name="materia" value="Programación" class="btn btn-outline-dark w-100" style="font-family: 'Mulish', sans-serif;">Programación</button>
                 </form>
             </div>
             <div class="col-md-4 zoom">
                 <form action="crear_examen.php" method="get">
-                    <button type="submit" name="materia" value="Lenguaje" class="btn btn-outline-dark w-100" style="font-family: 'Cal Sans', sans-serif;">Lenguaje</button>
+                    <button type="submit" name="materia" value="Lenguaje" class="btn btn-outline-dark w-100" style="font-family: 'Mulish', sans-serif;">Lenguaje</button>
                 </form>
             </div>
             <div class="col-md-4 zoom">
                 <form action="crear_examen.php" method="get">
-                    <button type="submit" name="materia" value="Historia" class="btn btn-outline-dark w-100" style="font-family: 'Cal Sans', sans-serif;">Historia</button>
+                    <button type="submit" name="materia" value="Historia" class="btn btn-outline-dark w-100" style="font-family: 'Mulish', sans-serif;">Historia</button>
                 </form>
             </div>
             <div class="col-md-4 zoom">
                 <form action="crear_examen.php" method="get">
-                    <button type="submit" name="materia" value="Geografia" class="btn btn-outline-dark w-100" style="font-family: 'Cal Sans', sans-serif;">Geografia</button>
+                    <button type="submit" name="materia" value="Geografia" class="btn btn-outline-dark w-100" style="font-family: 'Mulish', sans-serif;">Geografia</button>
                 </form>
             </div>
             <div class="col-md-4 zoom">
                 <form action="crear_examen.php" method="get">
-                    <button type="submit" name="materia" value="Ingles" class="btn btn-outline-dark w-100" style="font-family: 'Cal Sans', sans-serif;">Ingles</button>
+                    <button type="submit" name="materia" value="Ingles" class="btn btn-outline-dark w-100" style="font-family: 'Mulish', sans-serif;">Ingles</button>
                 </form>
             </div>
             <div class="col-md-4 zoom">
                 <form action="crear_examen.php" method="get">
-                    <button type="submit" name="materia" value="Biologia" class="btn btn-outline-dark w-100" style="font-family: 'Cal Sans', sans-serif;">Biologia</button>
+                    <button type="submit" name="materia" value="Biologia" class="btn btn-outline-dark w-100" style="font-family: 'Mulish', sans-serif;">Biologia</button>
                 </form>
             </div>
         </div>
