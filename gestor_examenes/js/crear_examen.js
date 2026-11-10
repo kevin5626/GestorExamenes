@@ -213,25 +213,23 @@ boton.addEventListener('click', function() {
 
     nuevoTema.innerHTML = `
         <div class="d-flex justify-content-between align-items-center mb-3">
-            <h4 class="m-0">
+            <h4 class="m-0" style="font-family: 'Dm-Sans', sans-serif;">
                 Tema ${indice + 1}
             </h4>
 
             <button type="button" class="btn btn-danger btn-sm eliminarTema" onclick="eliminarTema(this)">
-                X
+                <img src="../imagenes/icono_basura.png" alt="Eliminar" width="18" height="18">
             </button>
         </div>
 
         <div class="mb-3">
-            <label class="form-label"> Tema: </label>
-
             <select class="form-select" data-role="tema" name="temas[${indice}][tema]">
                 <option value=""> Cargando temas... </option>
             </select>
         </div>
 
         <div class="mb-3">
-            <label class="form-label"> Subtema: </label>
+            <label class="form-label">Subtema</label>
 
             <select class="form-select" data-role="subtema" name="temas[${indice}][subtema]" disabled>
                 <option value=""> Seleccionar subtema </option>
@@ -239,7 +237,7 @@ boton.addEventListener('click', function() {
         </div>
 
         <div class="mb-3">
-            <label class="form-label">Cantidad de preguntas:</label>
+            <label class="form-label">Cantidad de preguntas</label>
 
             <select class="form-select" data-role="cantidad" name="temas[${indice}][cantidad]">
                 <option value="1">1</option>
@@ -252,12 +250,12 @@ boton.addEventListener('click', function() {
         </div>
 
         <div>
-            <label class="form-label"> Dificultad: </label>
+            <label class="form-label">Dificultad</label>
 
             <select class="form-select" data-role="dificultad" name="temas[${indice}][dificultad]">
-                <option value="Facil"> Fácil </option>
-                <option value="Intermedio"> Intermedio </option>
-                <option value="Dificil"> Difícil </option>
+                <option value="Facil">Fácil</option>
+                <option value="Intermedio">Intermedio</option>
+                <option value="Dificil">Difícil</option>
             </select>
         </div>
     `;

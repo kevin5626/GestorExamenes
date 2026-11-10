@@ -23,7 +23,11 @@ $_SESSION['materia'] = $materia;
     <div class="container mt-3">
         <div class="d-flex justify-content-between align-items-center">
             <h1 class="mb-4" style="font-family: 'Momo Trust Display', sans-serif;"><?php echo htmlspecialchars($materia, ENT_QUOTES, 'UTF-8'); ?></h1>
-            <button class="btn btn-secondary mb-4" onclick="window.location.href='inicio_profesor.php'">Volver</button>
+            <div class="mb-4">
+                <a href="inicio_profesor.php" class="btn btn-danger">
+                    <img src="../imagenes/icono_flecha.png" alt="Volver" width="20" height="20">
+                </a>
+            </div>
         </div>
 
         <div class="row g-3">
@@ -32,13 +36,14 @@ $_SESSION['materia'] = $materia;
                     <div class="card p-4">
                         <p>Seleccione los temas que desea incluir en el examen.</p>
 
-                        <button type="button" class="btn btn-primary mb-4" id="agregarTema">+ Agregar tema</button>
+                        <button type="button" class="btn btn-primary mb-4" id="agregarTema">Agregar tema
+                                <img src="../imagenes/icono_mas.png" class="mb-1" alt="Agregar" width="16" height="16">
+                        </button>
 
                         <div id="contenedorTemas">
                             <div class="tema border rounded p-3 mb-3">
                                 <div class="d-flex justify-content-between align-items-center mb-3">
                                     <h4 class="m-0" style="font-family: 'Dm-Sans', sans-serif;">Tema 1</h4>
-                                    <button type="button" class="btn btn-danger btn-sm eliminarTema">X</button>
                                 </div>
 
                                 <div class="mb-3">
@@ -80,7 +85,9 @@ $_SESSION['materia'] = $materia;
                         </div>
 
                         <div class="d-flex justify-content-center mt-3">
-                            <button type="submit" class="btn btn-success">Generar examen</button>
+                            <button type="submit" class="btn btn-success">Generar examen
+                                <img src="../imagenes/icono_verificacion.png" alt="Verificacion" width="16" height="17">
+                            </button>
                         </div>
                     </div>
                 </form>

@@ -27,7 +27,7 @@ if (!isset($_SESSION["idUsuario"])) {
         </ul>
             <div class="d-flex">
                 <div class="align-items-center justify-content-center text-center me-4 p-0">
-                    <img src="../imagenes/icono_persona.png" alt="Usuario" width="30" height="30">
+                    <img src="../imagenes/icono_persona_alumno.png" alt="Usuario" width="30" height="30">
                     <h6><?php echo $_SESSION["nombre"]. " ". $_SESSION["apellido"]; ?></h6>
                 </div>
                 <div class="mt-2">

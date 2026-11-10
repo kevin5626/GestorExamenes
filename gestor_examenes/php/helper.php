@@ -1,19 +1,17 @@
 <?php
-
 require_once __DIR__ . "/../clases/usuario.php";
-require_once __DIR__ . "/../clases/dal/usuario_dal.php";
 require_once __DIR__ . "/../clases/alumno.php";
-require_once __DIR__ . "/../clases/dal/alumno_dal.php";
 require_once __DIR__ . "/../clases/profesor.php";
-require_once __DIR__ . "/../clases/dal/profesor_dal.php";
 require_once __DIR__ . "/../clases/pregunta.php";
-require_once __DIR__ . "/../clases/dal/pregunta_dal.php";
 require_once __DIR__ . "/../clases/examen.php";
-require_once __DIR__ . "/../clases/dal/examen_dal.php";
 require_once __DIR__ . "/../clases/examen_y_preguntas.php";
+
+require_once __DIR__ . "/../clases/dal/usuario_dal.php";
+require_once __DIR__ . "/../clases/dal/alumno_dal.php";
+require_once __DIR__ . "/../clases/dal/profesor_dal.php";
+require_once __DIR__ . "/../clases/dal/pregunta_dal.php";
+require_once __DIR__ . "/../clases/dal/examen_dal.php";
 require_once __DIR__ . "/../clases/dal/examen_preguntas_dal.php";
-
-
 
 function iniciarSesion(): void
 {
@@ -22,7 +20,6 @@ function iniciarSesion(): void
     }
 }
 
-
 function responderJson($datos, int $codigoHttp = 200, int $flags = 0): void
 {
     header("Content-Type: application/json; charset=UTF-8");
@@ -30,9 +27,6 @@ function responderJson($datos, int $codigoHttp = 200, int $flags = 0): void
     echo json_encode($datos, $flags);
     exit;
 }
-
-
-
 
 function registrarUsuario(array $datos): bool
 {
@@ -320,7 +314,9 @@ function renderModeloExamen(array $preguntas, string $tema, string $errorGuardar
                         <input type="hidden" name="idsPreguntas[]" value="<?php echo (int) $pregunta->getIdPregunta(); ?>">
                         <div class="d-flex justify-content-between align-items-center">
                             <h5 class="mb-0">Pregunta <?php echo $contador; ?></h5>
-                            <button type="button" class="btn btn-danger btn-sm eliminarPregunta">X</button>
+                            <button type="button" class="btn btn-danger btn-sm eliminarPregunta">
+                                <img src="../imagenes/icono_basura.png" alt="Eliminar" width="18" height="18">
+                            </button>
                         </div>
 
                         <p class="mt-3 mb-3"><?php echo htmlspecialchars($pregunta->getTextoPregunta(), ENT_QUOTES, 'UTF-8'); ?></p>
@@ -334,8 +330,10 @@ function renderModeloExamen(array $preguntas, string $tema, string $errorGuardar
                     </div>
                 <?php endforeach; ?>
 
-                <div class="d-flex justify-content-between align-items-center mt-4">
-                    <button type="submit" class="btn btn-success">Enviar examen</button>
+                <div class="d-flex justify-content-center align-items-center mt-4">
+                    <button type="submit" class="btn btn-success">Enviar
+                        <img src="../imagenes/icono_verificacion.png" alt="Verificacion" width="16" height="17">
+                    </button>
                 </div>
                 </form>
             <?php endif; ?>

@@ -26,6 +26,10 @@ p {
     font-family: 'Google Sans', sans-serif;
 }
 
+button {
+    font-family: 'Google Sans', sans-serif;
+}
+
 .zoom:hover {
     transform: scale(1.05);
     transition: transform 0.3s ease-in-out;

@@ -103,6 +103,10 @@ if ($idExamen > 0) {
                 echo "<div class='text-center mb-5'>";
                 echo "<button type='submit' class='btn btn-success btn-lg'>Entregar examen</button>";
                 echo "</div>";
+            } else {
+                echo "<div class='text-center mb-5'>";
+                echo "<a href='inicio_profesor.php' class='btn btn-secondary btn-lg'>Volver</a>";
+                echo "</div>";
             }
             ?>
         </form>
