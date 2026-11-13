@@ -291,6 +291,4 @@ document.addEventListener("click", function(event) {
             pregunta.remove();
         }
     }
-    
-    
 });

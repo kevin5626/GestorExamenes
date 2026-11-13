@@ -6,20 +6,28 @@
     <meta charset="UTF-8">
     <title><?php echo $esAlumno ? "Exámenes realizados" : "Exámenes recientes"; ?></title>
 
+    <link rel="icon" type="image/png" href="../imagenes/favicon.png">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
     <div class="container mt-5">
-        <h1 class="mb-4"><?php echo $esAlumno ? "Mis exámenes realizados" : "Exámenes recientes"; ?></h1>
+        <div class="d-flex justify-content-between align-items-center">
+            <h1 class="mb-4"><?php echo $esAlumno ? "Mis exámenes realizados" : "Exámenes recientes"; ?></h1>
+            <div class="mb-4">
+                <a href="inicio_profesor.php" class="btn btn-danger">
+                    <img src="../imagenes/icono_flecha.png" alt="Volver" width="20" height="20">
+                </a>
+            </div>
+        </div>
         <?php if ($errorCarga): ?>
-            <div class="alert alert-danger" role="alert">No se pudieron cargar tus pruebas. Inténtalo de nuevo más tarde.</div>
+            <div class="alert alert-danger" role="alert">No se pudieron cargar tus exámenes. Inténtalo de nuevo más tarde.</div>
         <?php elseif ($esAlumno): ?>
             <div class="row g-3 mb-4">
-                <div class="col-sm-6"><div class="border rounded p-3 h-100"><div class="text-muted">Pruebas realizadas</div><strong class="fs-4"><?php echo $totalResultados; ?></strong></div></div>
+                <div class="col-sm-6"><div class="border rounded p-3 h-100"><div class="text-muted">Exámenes Realizados</div><strong class="fs-4"><?php echo $totalResultados; ?></strong></div></div>
                 <div class="col-sm-6"><div class="border rounded p-3 h-100"><div class="text-muted">Promedio</div><strong class="fs-4"><?php echo $promedio !== null ? number_format($promedio, 1, ",", ".") . "/10" : "Sin calificaciones"; ?></strong></div></div>
             </div>
             <?php if (empty($resultadosAlumno)): ?>
-                <p class="text-muted">Todavía no has realizado ninguna prueba.</p>
+                <p class="text-muted">Todavía no has realizado ningún examen.</p>
             <?php else: ?>
                 <div class="table-responsive">
                     <table class="table table-striped align-middle">
@@ -40,25 +48,25 @@
             <?php endif; ?>
         <?php else: ?>
             <div class="row g-3 mb-4">
-                <div class="col-sm-4"><div class="border rounded p-3 h-100"><div class="text-muted">Pruebas creadas</div><strong class="fs-4"><?php echo count($examenes); ?></strong></div></div>
+                <div class="col-sm-4"><div class="border rounded p-3 h-100"><div class="text-muted">Examenes creados</div><strong class="fs-4"><?php echo count($examenes); ?></strong></div></div>
                 <div class="col-sm-4"><div class="border rounded p-3 h-100"><div class="text-muted">Entregas recibidas</div><strong class="fs-4"><?php echo $totalResultados; ?></strong></div></div>
                 <div class="col-sm-4"><div class="border rounded p-3 h-100"><div class="text-muted">Promedio general</div><strong class="fs-4"><?php echo $promedio !== null ? number_format($promedio, 1, ",", ".") . "/10" : "Sin calificaciones"; ?></strong></div></div>
             </div>
 
             <?php if (empty($examenes)): ?>
-                <p class="text-muted">Todavía no has creado pruebas.</p>
+                <p class="text-muted">Todavía no has creado exámenes.</p>
             <?php else: ?>
                 <?php foreach ($examenes as $idExamen => $examen): ?>
                     <section class="border rounded mb-4">
                         <div class="p-3 border-bottom d-flex flex-wrap justify-content-between gap-2">
                             <div>
-                                <h2 class="h5 mb-1"><?php echo $escapar($examen["tema"] ?: "Prueba sin tema"); ?></h2>
-                                <span class="text-muted">Prueba #<?php echo (int) $idExamen; ?> · Creada <?php echo $escapar($examen["fechaExamen"]); ?></span>
+                                <h2 class="h5 mb-1"><?php echo $escapar($examen["tema"] ?: "Examen sin tema"); ?></h2>
+                                <span class="text-muted">Examen #<?php echo (int) $idExamen; ?> · Creada <?php echo $escapar($examen["fechaExamen"]); ?></span>
                             </div>
-                            <span class="badge text-bg-secondary align-self-start"><?php echo count($examen["resultados"]); ?> entregas</span>
+                            <span class="badge text-bg-secondary align-self-start"><?php echo count($examen["resultados"]);?>entregas</span>
                         </div>
                         <?php if (empty($examen["resultados"])): ?>
-                            <p class="p-3 mb-0 text-muted">Aún no hay alumnos que hayan completado esta prueba.</p>
+                            <p class="p-3 mb-0 text-muted">Aún no hay alumnos que hayan completado este examen.</p>
                         <?php else: ?>
                             <div class="table-responsive">
                                 <table class="table table-striped mb-0 align-middle">
@@ -81,7 +89,6 @@
                 <?php endforeach; ?>
             <?php endif; ?>
         <?php endif; ?>
-        <a href="<?php echo $esAlumno ? "inicio_alumno.php" : "inicio_profesor.php"; ?>" class="btn btn-secondary">Volver al panel</a>
     </div>
 </body>
 </html>

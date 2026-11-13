@@ -53,11 +53,5 @@ class Examen {
     public function setIdProfesor(int $idProfesor): void {
         $this->idProfesor = $idProfesor;
     }
-
-    public function generarExamen(): void {
-    }
-
-    public function finalizarExamen(): void {
-    }
 }
 ?>

@@ -32,6 +32,7 @@ if ($idExamen > 0) {
 <head>
     <meta charset="UTF-8">
     <title>Examen</title>
+    <link rel="icon" type="image/png" href="../imagenes/favicon.png">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>

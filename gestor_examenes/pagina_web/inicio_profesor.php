@@ -14,16 +14,17 @@ if ($_SESSION["rol"] !== "profesor") {
 <html lang="es">
 <head>
     <meta charset="UTF-8">
+    <link rel="icon" type="image/png" href="../imagenes/favicon.png">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../estilos/style.css">
-    <title>Profesor</title>
+    <title>Panel Profesor</title>
 </head>
 <body>
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
     <div class="container-fluid px-4">
         <div class="d-flex">
-            <h4 class="me-3" style="font-family: 'Cal Sans', sans-serif;">Gestor de Examenes</h4>
-            <img src="../imagenes/icono_examen.png" width="30" height="30">
+            <img src="../imagenes/favicon.png" width="30" height="30">
+            <h4 style="font-family: 'Cal Sans', sans-serif;">estor de Examenes</h4>
         </div>
         </ul>
             <div class="d-flex">
@@ -87,18 +88,7 @@ if ($_SESSION["rol"] !== "profesor") {
             <h2>Mis exámenes</h2>
         </div>
         <div class="row justify-content-center g-4">
-            <!-- Carpeta 1 -->
-            <div class="col-md-4 zoom">
-                <a href="pruebas_recientes.php" class="text-decoration-none text-dark">
-                    <div class="card text-center p-4">
-                        <div class="fs-1">
-                            <img src="../imagenes/icono_carpeta1.png" width="50" height="50">
-                        </div>
-                        <h5 class="mt-3">Mis examenes</h5>
-                    </div>
-                </a>
-            </div>
-            <!-- Carpeta 2 -->
+            <!-- Carpeta -->
             <div class="col-md-4 zoom">
                 <a href="pruebas_recientes.php" class="text-decoration-none text-dark">
                     <div class="card text-center p-4">

@@ -16,6 +16,7 @@ $_SESSION['materia'] = $materia;
 <head>
     <meta charset="UTF-8">
     <title>Crear examen</title>
+    <link rel="icon" type="image/png" href="../imagenes/favicon.png">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../estilos/style.css">
 </head>

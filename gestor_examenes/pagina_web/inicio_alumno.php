@@ -11,9 +11,10 @@ if (!isset($_SESSION["idUsuario"])) {
 <html lang="es">
 <head>
     <meta charset="UTF-8">
+    <link rel="icon" type="image/png" href="../imagenes/favicon.png">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../estilos/style.css">
-    <title>Ingresar a examen</title>
+    <title>Panel Alumno</title>
 
 </head>
 
@@ -21,8 +22,8 @@ if (!isset($_SESSION["idUsuario"])) {
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
     <div class="container-fluid px-4">
         <div class="d-flex">
-            <h4 class="me-3" style="font-family: 'Cal Sans', sans-serif;">Gestor de Examenes</h4>
-            <img src="../imagenes/icono_examen.png" width="30" height="30">
+            <img src="../imagenes/favicon.png" width="30" height="30">
+            <h4 style="font-family: 'Cal Sans', sans-serif;">estor de Examenes</h4>
         </div>
         </ul>
             <div class="d-flex">
@@ -64,10 +65,10 @@ if (!isset($_SESSION["idUsuario"])) {
             </div>
             <hr class="mt-4">
         <!-- Mis exámenes -->
-        <div class="mb-4">
+        <div>
             <h2>Exámenes realizados</h2>
         </div>
-        <div class="row justify-content-center g-4">
+        <div class="row justify-content-center g-2">
             <!-- Carpeta 1 -->
             <div class="col-md-4 zoom">
                 <a href="pruebas_recientes.php" class="text-decoration-none text-dark">
